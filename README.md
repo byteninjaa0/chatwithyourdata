@@ -1,46 +1,23 @@
 # Chat with your Data
 
-AI-powered dashboard assistant built with [CopilotKit](https://copilotkit.ai), Next.js, and Tremor. Ask questions about sample sales metrics in natural language, search the web via Tavily, and see answers in a Copilot sidebar.
+AI-powered financial planning dashboard with a Copilot sidebar: browse client records from Airtable, view portfolio and liability summaries, and ask questions in natural language. By default, chat runs through a **LangGraph Python agent** on port 8000 (Azure OpenAI + Tavily web search); the Next.js app proxies CopilotKit traffic and exposes dashboard context to the model.
 
-![Chat with your data](./preview.gif)
+## Tech stack
 
-This folder is a **standalone app** — copy it to your own repository; it does not depend on the CopilotKit monorepo.
+- **Frontend:** Next.js `^15.5.18`, React `^19`, CopilotKit `@copilotkit/*` `^1.57.1`, Tailwind CSS `^4`, Recharts
+- **Agent:** Python FastAPI + `copilotkit` / `ag-ui-langgraph` + LangChain `create_agent` + LangGraph (`agent/main.py`)
+- **Data API:** Python FastAPI + Airtable (`backend/airtable_main.py`)
+- **Providers:** Azure OpenAI, Tavily, Airtable
 
-## Prerequisites
+## How to run locally
 
-- **Node.js 20+**
-- **npm**, **pnpm**, or **yarn**
-- An **Azure OpenAI** or **OpenAI** API key
-- A **[Tavily](https://tavily.com)** API key (for the `searchInternet` backend action)
-
-## Quick start
-
-1. **Copy or clone** this directory into your project.
-
-2. **Install dependencies:**
-
-   ```bash
-   npm install
-   ```
-
-   ```bash
-   # or
-   pnpm install
-   ```
-
-3. **Configure environment variables:**
+1. Copy env and configure keys (see `.env.example` — Azure for the agent, Tavily, Airtable for the dashboard):
 
    ```bash
    cp .env.example .env
    ```
 
-   Edit `.env` and set at least:
-
-   - **Azure OpenAI** — `AZURE_API_KEY`, `AZURE_API_BASE`, `AZURE_DEPLOYMENT_NAME`, and optionally `AZURE_API_VERSION`
-   - **or OpenAI** — `OPENAI_API_KEY` (used when Azure variables are unset)
-   - **Tavily** — `TAVILY_API_KEY`
-
-4. **Start the LangGraph agent** (CopilotKit chat, port **8000**):
+2. **Terminal 1 — LangGraph agent (port 8000):**
 
    ```bash
    cd agent
@@ -48,105 +25,34 @@ This folder is a **standalone app** — copy it to your own repository; it does 
    python main.py
    ```
 
-5. **Start the Airtable / financial-planning API** (client data for the dashboard, port **8001**):
+   Health check: `curl http://localhost:8000/copilotkit/health` → `{"status":"ok","agent":{"name":"dashboard_agent"}}`
+
+3. **Terminal 2 — Airtable API (port 8001):**
 
    ```bash
    pip install -r backend/requirements.txt
    python backend/airtable_main.py
    ```
 
-   Set `AIRTABLE_TOKEN`, `AIRTABLE_BASE_ID`, and `AIRTABLE_TABLE` in `.env`. The UI calls this via Next.js `/api/airtable/*` using `FASTAPI_BASE_URL` (default `http://localhost:8001`).
+   Health check: `curl http://localhost:8001/health` → `{"status":"ok"}`
 
-   In the repo root `.env`, set `LANGGRAPH_AGENT_URL=http://localhost:8000/copilotkit` (see `.env.example`).
-
-6. **Run the dev server** (separate terminal, repo root):
+4. **Terminal 3 — Next.js (port 3000):**
 
    ```bash
+   npm install
    npm run dev
    ```
 
-7. Open [http://localhost:3000](http://localhost:3000).
+   Set `LANGGRAPH_AGENT_URL=http://localhost:8000/copilotkit` in `.env` (recommended). Open [http://localhost:3000](http://localhost:3000).
 
-### Optional query parameter
+Unset `LANGGRAPH_AGENT_URL` to use **direct Azure/OpenAI** from Next.js only (no Python agent required for chat).
 
-- `?openCopilot=true` — opens the Copilot sidebar on load.
+## Full documentation
 
-## Environment variables
+Architecture, request lifecycle, env vars, tools, failure modes, and non-obvious behavior:
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `AZURE_API_KEY` | Azure path | Azure OpenAI API key |
-| `AZURE_API_BASE` | Azure path | Resource URL, e.g. `https://your-resource.openai.azure.com` |
-| `AZURE_DEPLOYMENT_NAME` | Azure path | Deployment name, e.g. `gpt-4o` |
-| `AZURE_API_VERSION` | No | API version (default `2024-08-01-preview`) |
-| `OPENAI_API_KEY` | OpenAI path | Used when Azure vars are not set |
-| `TAVILY_API_KEY` | Yes* | Tavily search for `searchInternet` action |
-| `LANGGRAPH_AGENT_URL` | LangGraph path | e.g. `http://localhost:8000/copilotkit` — proxies chat to the Python agent |
-| `NEXT_PUBLIC_LANGGRAPH_AGENT_ID` | No | Defaults to `dashboard_agent` (must match `agent/main.py`) |
-
-\*Chat works without Tavily, but web search actions will fail.
-
-Unset `LANGGRAPH_AGENT_URL` to fall back to **direct** Azure/OpenAI from Next.js (original demo behavior).
-
-> **Azure note:** The API route uses the **Chat Completions** API (`provider.chat()`), not OpenAI’s Responses API, because Azure deployments typically do not expose `/responses`.
-
-## Project structure
-
-```
-├── agent/
-│   ├── main.py                   # LangGraph agent + FastAPI AG-UI endpoint
-│   └── requirements.txt
-├── app/
-│   ├── api/copilotkit/route.ts   # CopilotKit runtime → LangGraph or Azure/OpenAI
-│   ├── layout.tsx                # CopilotKit provider
-│   └── page.tsx                  # Dashboard + CopilotSidebar
-├── components/                   # UI, charts, generative search results
-├── data/dashboard-data.ts        # Sample metrics (no external DB)
-├── lib/prompt.ts                 # Copilot instructions
-├── .env.example
-└── package.json
-```
-
-## Production build
-
-```bash
-# Ensure a standard production env (required for `next build`)
-export NODE_ENV=production   # Git Bash / macOS / Linux
-# PowerShell: $env:NODE_ENV = "production"
-
-npm run build
-npm run start
-```
-
-This repo includes `package-lock.json` and `.npmrc` (`legacy-peer-deps=true`) so `npm ci` reproduces the same install on CI and other machines.
-
-Deploy to [Vercel](https://vercel.com) or any Node host; set the same environment variables in the project settings.
-
-## How it works
-
-With **`LANGGRAPH_AGENT_URL`** set (default in `.env.example`):
-
-1. **`agent/main.py`** runs a LangGraph agent (Azure/OpenAI + Tavily + `CopilotKitMiddleware`) at `http://localhost:8000/copilotkit`.
-2. **`CopilotKit`** in `app/layout.tsx` uses `agent="dashboard_agent"` and talks to `/api/copilotkit`.
-3. **`app/api/copilotkit/route.ts`** uses `LangGraphHttpAgent` — no direct LLM calls from Next.js.
-
-Without `LANGGRAPH_AGENT_URL`, the app calls Azure/OpenAI directly from the API route (legacy path).
-
-- **`useCopilotReadable`** in `components/Dashboard.tsx` exposes dashboard JSON to the model (via CopilotKit → LangGraph when the agent is running).
-- **`searchInternet`** — tool on the LangGraph agent; UI still renders via `useCopilotAction` in `Dashboard.tsx`.
-
-## Troubleshooting
-
-| Symptom | Fix |
-|---------|-----|
-| **Resource not found** (Azure) | Confirm deployment name and base URL; ensure Chat Completions is enabled for the deployment. |
-| **Agent not found** | Start `python agent/main.py`, confirm `LANGGRAPH_AGENT_URL`, and that `agent="dashboard_agent"` matches `agent/main.py`. |
-| **LangGraph / agent connection errors** | Check `http://localhost:8000/health` and that nothing else uses port 8000. |
-| **ECONNREFUSED** | Ensure `npm run dev` is running; check `runtimeUrl` is `/api/copilotkit`. |
-| Tavily errors | Set `TAVILY_API_KEY` in `.env`. |
+**[PROJECT_OVERVIEW.md](./PROJECT_OVERVIEW.md)**
 
 ## License
 
 MIT — see [LICENSE](./LICENSE).
-
-Based on the [CopilotKit chat-with-your-data example](https://github.com/CopilotKit/CopilotKit/tree/main/examples/v1/chat-with-your-data).
