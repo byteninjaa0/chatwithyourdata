@@ -6,13 +6,27 @@ structured client data for the Next.js dashboard.
 """
 
 import os
+import sys
 from pathlib import Path
 
 import requests as http_requests
 import uvicorn
 from dotenv import load_dotenv
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.requests import Request
+from fastapi.responses import JSONResponse
+from pydantic import BaseModel
+
+_BACKEND_DIR = Path(__file__).resolve().parent
+if str(_BACKEND_DIR) not in sys.path:
+    sys.path.insert(0, str(_BACKEND_DIR))
+
+from rsu_market import (  # noqa: E402
+    get_prices_for_tickers,
+    get_rsu_market_payload,
+    refresh_rsu_market_payload,
+)
 
 # Repo-root .env (same as agent/main.py)
 load_dotenv(Path(__file__).resolve().parent.parent / ".env")
@@ -35,6 +49,20 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+class RsuRefreshBody(BaseModel):
+    tickers: list[str] = []
+
+
+@app.exception_handler(Exception)
+async def unhandled_exception_handler(request: Request, exc: Exception):
+    if isinstance(exc, HTTPException):
+        return JSONResponse(status_code=exc.status_code, content={"detail": exc.detail})
+    return JSONResponse(
+        status_code=500,
+        content={"detail": str(exc), "type": type(exc).__name__},
+    )
 
 
 # ── Airtable helpers ─────────────────────────────────────────────────────────
@@ -472,6 +500,62 @@ def get_client_data(record_id: str):
         raise HTTPException(status_code=502, detail=f"Airtable error: {resp.text}")
     fields = resp.json().get("fields", {})
     return {"record_id": record_id, "client_data": airtable_record_to_client_data(fields)}
+
+
+@app.get("/rsu-market-data")
+def get_rsu_market_data():
+    """Return RSU market data (ticker prices + USD/INR) from the cached Parquet file."""
+    try:
+        return get_rsu_market_payload()
+    except FileNotFoundError as exc:
+        raise HTTPException(
+            status_code=503,
+            detail="RSU market data not available. Run refresh first.",
+        ) from exc
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail=str(exc)) from exc
+
+
+@app.post("/rsu-refresh")
+def refresh_rsu_market_data(body: RsuRefreshBody | None = None):
+    """Force-refresh RSU market data (USD/INR + prices for given tickers)."""
+    tickers = body.tickers if body and body.tickers else None
+    try:
+        return refresh_rsu_market_payload(tickers=tickers)
+    except FileNotFoundError as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
+    except RuntimeError as exc:
+        raise HTTPException(status_code=502, detail=str(exc)) from exc
+    except Exception as exc:
+        raise HTTPException(
+            status_code=500, detail=f"RSU refresh failed: {exc}"
+        ) from exc
+
+
+# Legacy paths (used by older Next.js routes)
+@app.get("/rsu/market-data")
+def rsu_market_data_legacy(ticker: list[str] = Query(default=[])):
+    try:
+        if ticker:
+            return get_prices_for_tickers(ticker)
+        return get_rsu_market_payload()
+    except FileNotFoundError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+
+
+@app.post("/rsu/market-data/refresh")
+def rsu_market_data_refresh_legacy(
+    force: bool = False,
+    ticker: list[str] = Query(default=[]),
+):
+    try:
+        return refresh_rsu_market_payload(
+            tickers=ticker if ticker else None,
+        )
+    except FileNotFoundError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except RuntimeError as exc:
+        raise HTTPException(status_code=502, detail=str(exc)) from exc
 
 
 if __name__ == "__main__":

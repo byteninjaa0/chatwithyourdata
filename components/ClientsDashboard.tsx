@@ -70,6 +70,31 @@ function inr(n: number | null | undefined): string {
 
 function pct(r: number) { return r ? `${(r * 100).toFixed(2)}%` : "—"; }
 
+type RsuTickerPrice = {
+  price_usd: number;
+  price_inr: number;
+  usd_to_inr_rate: number;
+  scrape_date: string;
+};
+
+type RsuMarketMeta = {
+  last_update: string | null;
+  scrape_date: string | null;
+  usd_to_inr_rate: number | null;
+  ticker_count?: number;
+  parquet_ok?: boolean;
+  parquet_row_count?: number;
+  parquet_exists?: boolean;
+};
+
+function trancheValueInr(
+  priceUsd: number,
+  usdToInr: number,
+  shares: number,
+): number {
+  return Math.round(priceUsd * usdToInr * shares * 100) / 100;
+}
+
 // ── Sub-components ────────────────────────────────────────────────────────────
 
 function KvGrid({ items }: { items: Record<string, string | number | null | undefined> }) {
@@ -178,9 +203,27 @@ function DonutChart({ slices }: { slices: { label: string; value: number; color:
 }
 
 // ── RSU accordion item ────────────────────────────────────────────────────────
-function RsuCard({ rsu }: { rsu: ClientDetail["client_data"]["investment_details"]["rsu"][0] }) {
+function RsuCard({
+  rsu,
+  quote,
+}: {
+  rsu: ClientDetail["client_data"]["investment_details"]["rsu"][0];
+  quote?: RsuTickerPrice;
+}) {
   const [open, setOpen] = useState(false);
   const total = rsu.vesting_schedule.reduce((s, v) => s + (v.no_shares || 0), 0);
+  const totalTranche = quote
+    ? rsu.vesting_schedule.reduce(
+        (s, v) =>
+          s +
+          trancheValueInr(
+            quote.price_usd,
+            quote.usd_to_inr_rate,
+            v.no_shares || 0,
+          ),
+        0,
+      )
+    : null;
   return (
     <div className="border border-gray-200 rounded-lg overflow-hidden mb-2">
       <button
@@ -188,20 +231,207 @@ function RsuCard({ rsu }: { rsu: ClientDetail["client_data"]["investment_details
         className="w-full flex items-center justify-between px-4 py-3 bg-blue-50 hover:bg-blue-100 text-left"
       >
         <span className="font-bold text-blue-900 text-sm">
-          {rsu.company_name} {rsu.ticker && <span className="text-xs font-normal text-gray-500">({rsu.ticker})</span>}
+          {rsu.company_name}{" "}
+          {rsu.ticker && (
+            <span className="text-xs font-normal text-gray-500">
+              ({rsu.ticker})
+              {quote && (
+                <span className="ml-1 text-gray-600">
+                  · ${quote.price_usd.toFixed(2)} · ₹
+                  {quote.price_inr.toLocaleString("en-IN")}/share
+                </span>
+              )}
+            </span>
+          )}
         </span>
-        <span className="text-xs text-gray-500">{total.toLocaleString("en-IN")} shares · {rsu.vesting_schedule.length} rows {open ? "▲" : "▼"}</span>
+        <span className="text-xs text-gray-500 text-right">
+          {total.toLocaleString("en-IN")} shares · {rsu.vesting_schedule.length} tranches
+          {totalTranche != null && (
+            <span className="block font-semibold text-green-700">
+              Total: {inr(totalTranche)}
+            </span>
+          )}{" "}
+          {open ? "▲" : "▼"}
+        </span>
       </button>
       {open && (
         <div className="px-4 py-3 bg-gray-50">
-          <DataTable rows={rsu.vesting_schedule.map(v => ({
-            Year: v.year,
-            "Vesting %": v.vesting != null ? `${(v.vesting * 100).toFixed(0)}%` : "—",
-            Shares: v.no_shares?.toLocaleString("en-IN") ?? "—",
-          }))} />
+          {quote && (
+            <p className="text-[10px] text-gray-500 mb-2">
+              FX 1 USD = ₹{quote.usd_to_inr_rate} (as of {quote.scrape_date}) · Tranche
+              value = price × FX × shares
+            </p>
+          )}
+          <DataTable
+            rows={rsu.vesting_schedule.map((v) => {
+              const shares = v.no_shares || 0;
+              const tranche =
+                quote && shares
+                  ? trancheValueInr(
+                      quote.price_usd,
+                      quote.usd_to_inr_rate,
+                      shares,
+                    )
+                  : null;
+              return {
+                Year: v.year,
+                "Vesting %":
+                  v.vesting != null
+                    ? `${(v.vesting * 100).toFixed(0)}%`
+                    : "—",
+                Shares: shares ? shares.toLocaleString("en-IN") : "—",
+                "Price (USD)": quote ? `$${quote.price_usd.toFixed(2)}` : "—",
+                "FX (USD→INR)": quote
+                  ? quote.usd_to_inr_rate.toFixed(2)
+                  : "—",
+                "Tranche value": tranche != null ? inr(tranche) : "—",
+              };
+            })}
+          />
         </div>
       )}
     </div>
+  );
+}
+
+function RsuSection({
+  rsus,
+}: {
+  rsus: ClientDetail["client_data"]["investment_details"]["rsu"];
+}) {
+  const [prices, setPrices] = useState<Record<string, RsuTickerPrice>>({});
+  const [meta, setMeta] = useState<RsuMarketMeta | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const tickers = [
+    ...new Set(
+      rsus.map((r) => r.ticker?.trim().toUpperCase()).filter(Boolean) as string[],
+    ),
+  ];
+
+  const applyMarketPayload = (data: {
+    tickers?: Record<string, RsuTickerPrice>;
+    usd_to_inr_rate?: number | null;
+    scrape_date?: string | null;
+    last_updated?: string | null;
+    parquet_ok?: boolean;
+    parquet_row_count?: number;
+  }) => {
+    const cache = data.tickers ?? {};
+    const subset: Record<string, RsuTickerPrice> = {};
+    for (const t of tickers) {
+      if (cache[t]) subset[t] = cache[t];
+    }
+    setPrices(subset);
+    setMeta({
+      usd_to_inr_rate: data.usd_to_inr_rate ?? null,
+      scrape_date: data.scrape_date ?? null,
+      last_update: data.last_updated ?? null,
+      parquet_ok: data.parquet_ok,
+      parquet_row_count: data.parquet_row_count,
+    });
+  };
+
+  const loadPrices = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch("/api/rsu-market-data");
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(
+          typeof data.detail === "string"
+            ? data.detail
+            : data.error || res.statusText,
+        );
+      }
+      applyMarketPayload(data);
+    } catch (e) {
+      setError((e as Error).message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const refreshPrices = async () => {
+    if (tickers.length === 0) return;
+    setRefreshing(true);
+    setError(null);
+    try {
+      const res = await fetch("/api/rsu-refresh", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ tickers }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(
+          typeof data.detail === "string"
+            ? data.detail
+            : data.error || res.statusText,
+        );
+      }
+      applyMarketPayload(data);
+    } catch (e) {
+      setError((e as Error).message);
+    } finally {
+      setRefreshing(false);
+    }
+  };
+
+  useEffect(() => {
+    loadPrices();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [rsus.map((r) => r.ticker).join(",")]);
+
+  return (
+    <>
+      <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+        <p className="text-[10px] text-gray-500">
+          {meta?.scrape_date
+            ? `Market data: ${meta.scrape_date}`
+            : "Load prices to compute tranche values"}
+          {meta?.usd_to_inr_rate != null && (
+            <span> · USD/INR {meta.usd_to_inr_rate}</span>
+          )}
+          {meta?.parquet_ok && meta.parquet_row_count != null && (
+            <span> · {meta.parquet_row_count} tickers in cache</span>
+          )}
+        </p>
+        <button
+          type="button"
+          onClick={refreshPrices}
+          disabled={refreshing || loading || tickers.length === 0}
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg bg-blue-900 text-white hover:bg-blue-800 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {refreshing ? (
+            <>
+              <span className="inline-block w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin" />
+              Updating prices…
+            </>
+          ) : (
+            "Refresh RSU market data"
+          )}
+        </button>
+      </div>
+      {error && (
+        <p className="text-xs text-red-600 mb-2 bg-red-50 border border-red-100 rounded px-2 py-1">
+          {error}
+        </p>
+      )}
+      {loading && !refreshing && (
+        <p className="text-xs text-gray-400 mb-2">Loading market prices…</p>
+      )}
+      {rsus.map((r, i) => (
+        <RsuCard
+          key={i}
+          rsu={r}
+          quote={r.ticker ? prices[r.ticker.trim().toUpperCase()] : undefined}
+        />
+      ))}
+    </>
   );
 }
 
@@ -493,7 +723,7 @@ export function ClientsDashboard() {
 
                     {(inv?.rsu ?? []).length > 0 && <>
                       <SectionLabel icon="⭐" text="RSUs" />
-                      {inv!.rsu.map((r, i) => <RsuCard key={i} rsu={r} />)}
+                      <RsuSection rsus={inv!.rsu} />
                     </>}
 
                     {(inv?.ulips ?? []).length > 0 && <>
