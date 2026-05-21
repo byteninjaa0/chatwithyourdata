@@ -460,6 +460,10 @@ export function ClientsDashboard() {
   const [error, setError]             = useState<string | null>(null);
   const [activeTab, setActiveTab]     = useState<"overview" | "kids" | "liabilities">("overview");
   const [chartMode, setChartMode]     = useState<"detailed" | "liquid">("detailed");
+  const [planResult, setPlanResult]   = useState<{
+    ok?: boolean;
+    summary?: Record<string, unknown>;
+  } | null>(null);
 
   useEffect(() => {
     fetch("/api/airtable/clients")
@@ -479,6 +483,22 @@ export function ClientsDashboard() {
 
   useCopilotReadable({ description: "List of financial planning clients", value: clients });
   useCopilotReadable({ description: "Selected client full financial data", value: detail ?? "No client selected" });
+  useCopilotReadable({
+    description:
+      "LangGraph financial plan output for the selected client (from Make plan). Includes goal allocations with funding sources, risk appetite, liquidity, spending behavior, prioritized goals, and retirement scheme breakdown. Not available until the user runs Make plan.",
+    value: planResult?.summary
+      ? {
+          record_id: selectedId,
+          generated: true,
+          plan_summary: planResult.summary,
+        }
+      : {
+          record_id: selectedId,
+          generated: false,
+          message:
+            "No financial plan has been generated for this client yet. Ask the user to click Make plan first, or answer from input data only.",
+        },
+  });
 
   useCopilotAction({
     name: "searchInternet",
@@ -600,7 +620,11 @@ export function ClientsDashboard() {
 
         {detail && !loadingDetail && (
           <div className="flex flex-col gap-4">
-            <FinancialPlanPanel recordId={selectedId} disabled={loadingDetail} />
+            <FinancialPlanPanel
+              recordId={selectedId}
+              disabled={loadingDetail}
+              onPlanResult={setPlanResult}
+            />
 
             {/* ── Net Worth + Portfolio row ── */}
             <div className="flex gap-4 items-stretch">

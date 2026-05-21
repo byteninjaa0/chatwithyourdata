@@ -391,9 +391,12 @@ function PlanGeneratingOverlay({ activeStep }: { activeStep: number }) {
 export function FinancialPlanPanel({
   recordId,
   disabled,
+  onPlanResult,
 }: {
   recordId: string | null;
   disabled?: boolean;
+  /** Notifies parent when plan completes — used for CopilotKit context. */
+  onPlanResult?: (result: PlanResponse | null) => void;
 }) {
   const [loading, setLoading] = React.useState(false);
   const [overlayStep, setOverlayStep] = React.useState(0);
@@ -403,6 +406,13 @@ export function FinancialPlanPanel({
     msg: string;
     type: "info" | "success" | "error";
   } | null>(null);
+
+  React.useEffect(() => {
+    setResult(null);
+    setError(null);
+    setStatus(null);
+    onPlanResult?.(null);
+  }, [recordId, onPlanResult]);
 
   React.useEffect(() => {
     if (!loading) {
@@ -430,6 +440,7 @@ export function FinancialPlanPanel({
     setLoading(true);
     setError(null);
     setResult(null);
+    onPlanResult?.(null);
     setStatus({ msg: "Generating financial plan…", type: "info" });
     try {
       const res = await fetch("/api/financial-plan/run", {
@@ -446,6 +457,7 @@ export function FinancialPlanPanel({
         return;
       }
       setResult(data);
+      onPlanResult?.(data);
       setStatus({
         msg: "Plan ready — review below.",
         type: "success",
@@ -453,6 +465,7 @@ export function FinancialPlanPanel({
     } catch (e) {
       const msg = (e as Error).message;
       setError(msg);
+      onPlanResult?.(null);
       setStatus({ msg, type: "error" });
     } finally {
       setLoading(false);
