@@ -313,6 +313,45 @@ def summarize_plan_state(state: dict) -> dict:
         oga_for_ssy if isinstance(oga_for_ssy, dict) else {}
     )
 
+    term_insurance_requirement = None
+    term = state.get("term_insurance_summary") or {}
+    if term:
+        def _num(v):
+            if v is None:
+                return 0
+            try:
+                return int(float(v))
+            except (TypeError, ValueError):
+                return 0
+
+        pv = _num(term.get("pv_of_expenses", 0))
+        edu = _num(term.get("kids_education_cost", 0))
+        liab = _num(term.get("current_liabilities", 0))
+        cover = _num(term.get("existing_cover", 0))
+        liquid = _num(term.get("liquidable_assets", 0))
+        total = _num(term.get("total_term_required", 0))
+
+        term_insurance_requirement = {
+            "section": "Term Insurance Requirement",
+            "total_cover_required": total,
+            "breakdown": {
+                "income_replacement_corpus": pv,
+                "kids_education_cost": edu,
+                "outstanding_liabilities": liab,
+                "less_existing_cover": -cover,
+                "less_liquid_assets": -liquid,
+            },
+            "note": (
+                f"Client needs a total term cover of "
+                f"₹{total:,}. "
+                f"This accounts for income replacement (₹{pv:,}), "
+                f"children's education (₹{edu:,}), "
+                f"outstanding liabilities (₹{liab:,}), "
+                f"less existing cover (₹{cover:,}) "
+                f"and liquid assets (₹{liquid:,})."
+            ),
+        }
+
     return {
         "client_name": name,
         "monthly_surplus": state.get("monthly_surplus"),
@@ -332,6 +371,7 @@ def summarize_plan_state(state: dict) -> dict:
         if isinstance(state.get("retirement_goal"), list)
         else state.get("retirement_goal"),
         "ssy_summary_preview": ssy_summary_preview,
+        "term_insurance_requirement": term_insurance_requirement,
     }
 
 
@@ -353,12 +393,23 @@ def run_financial_plan_for_client(client_payload: dict) -> dict:
     """
     client_payload: same shape as Armstrong `client_data` (client_data + investment_details + goals + ...).
     """
+    import traceback
+
     ensure_fp_runtime()
     run_financial_plan_workflow = _load_workflow_runner()
 
     payload = deepcopy(client_payload)
-    raw = run_financial_plan_workflow(payload)
-    summary = summarize_plan_state(raw)
+    try:
+        raw = run_financial_plan_workflow(payload)
+        summary = summarize_plan_state(raw)
+    except OSError as exc:
+        print("=" * 60, file=sys.stderr)
+        print(f"OSError in make plan: {exc}", file=sys.stderr)
+        print(f"Error code: {exc.errno}", file=sys.stderr)
+        print(f"Filename involved: {getattr(exc, 'filename', None)!r}", file=sys.stderr)
+        traceback.print_exc()
+        print("=" * 60, file=sys.stderr)
+        raise
     return {
         "ok": True,
         "summary": summary,

@@ -612,6 +612,13 @@ def run_financial_plan(req: FinancialPlanRequest):
         return run_financial_plan_for_client(client_payload)
     except FinancialPlanDependencyError as exc:
         raise HTTPException(status_code=503, detail=str(exc)) from exc
+    except OSError as exc:
+        traceback.print_exc()
+        filename = getattr(exc, "filename", None)
+        detail = f"Financial plan I/O error: {exc}"
+        if filename:
+            detail += f" (file: {filename!r})"
+        raise HTTPException(status_code=500, detail=detail) from exc
     except Exception as exc:
         traceback.print_exc()
         raise HTTPException(

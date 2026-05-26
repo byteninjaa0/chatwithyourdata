@@ -1,0 +1,43 @@
+# dependencies
+node_modules
+.venv
+venv
+__pycache__
+*.py[cod]
+*.egg-info
+
+# build / cache
+.next
+out
+build
+coverage
+*.tsbuildinfo
+
+# env and secrets
+.env
+.env.*
+!.env.example
+
+# git / IDE
+.git
+.gitignore
+.cursor
+.cursorrules
+*.md
+!README.md
+
+# tests (not needed in production images)
+**/tests
+**/__tests__
+vitest.config.ts
+vitest.setup.ts
+agent/pytest.ini
+agent/requirements-test.txt
+
+# local scripts
+scripts
+start.cmd
+terminals
+
+# deploy config (secrets)
+deploy/azure/config.env

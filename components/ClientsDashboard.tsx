@@ -475,7 +475,7 @@ export function ClientsDashboard() {
   useCopilotReadable({ description: "Selected client full financial data", value: detail ?? "No client selected" });
   useCopilotReadable({
     description:
-      "LangGraph financial plan output for the selected client (from Make plan). Includes goal allocations with funding sources, risk appetite, liquidity, spending behavior, prioritized goals, and retirement scheme breakdown. Not available until the user runs Make plan.",
+      "LangGraph financial plan output for the selected client (from Make plan). Includes goal allocations with funding sources, risk appetite, liquidity, spending behavior, prioritized goals, retirement scheme breakdown, and term_insurance_requirement (total term cover needed with breakdown). Not available until the user runs Make plan.",
     value: planResult?.summary
       ? {
           record_id: selectedId,

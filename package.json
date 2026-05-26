@@ -11,7 +11,10 @@
     "start": "next start",
     "lint": "next lint",
     "test": "vitest run",
-    "test:agent": "cd agent && python -m pytest tests -q"
+    "test:agent": "cd agent && python -m pytest tests -q",
+    "docker:up": "docker compose up --build",
+    "docker:down": "docker compose down",
+    "deploy:azure": "powershell -NoProfile -ExecutionPolicy Bypass -File ./deploy/azure/deploy.ps1"
   },
   "dependencies": {
     "@ai-sdk/openai": "^3.0.36",

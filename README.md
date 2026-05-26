@@ -68,6 +68,58 @@ This creates `.venv`, installs Python and npm deps if needed, and starts the age
 
 Unset `LANGGRAPH_AGENT_URL` to use **direct Azure/OpenAI** from Next.js only (no Python agent required for chat).
 
+## Deploy to Azure Container Apps
+
+Production runs as **three containers**: Next.js (public), LangGraph agent (internal), and the financial API (internal).
+
+### 1. Prerequisites
+
+- [Azure CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli) — `az login`
+- Docker Desktop
+- Azure OpenAI, Airtable, and Tavily keys
+
+### 2. Configure
+
+```powershell
+cp deploy/azure/config.example.env deploy/azure/config.env
+# Edit deploy/azure/config.env — set ACR name (globally unique), secrets, Azure OpenAI endpoint
+```
+
+### 3. Deploy
+
+```powershell
+npm run deploy:azure
+```
+
+This creates the resource group, container registry, and container apps environment (if missing), builds and pushes all three images, and deploys:
+
+| Container app | Role | Ingress |
+|---------------|------|---------|
+| `ca-web` | Next.js | External (public URL) |
+| `ca-agent` | Copilot chat agent | Internal |
+| `ca-backend` | Airtable + Make plan | Internal |
+
+Redeploy after code changes:
+
+```powershell
+.\deploy\azure\deploy.ps1              # rebuild images + redeploy
+.\deploy\azure\deploy.ps1 -SkipBuild   # redeploy existing images only
+.\deploy\azure\build.ps1 -Tag v2       # build/push only, then bump IMAGE_TAG in config.env
+```
+
+### 4. Test locally with Docker first
+
+```powershell
+cp .env.example .env   # fill in keys
+npm run docker:up
+```
+
+Open [http://localhost:3000](http://localhost:3000). See `docker-compose.yml` for service wiring.
+
+### 5. Before sharing with clients
+
+The app has **no authentication** today. Add Azure Entra ID or NextAuth, move secrets to Key Vault, and restrict CORS before a public launch. See `deploy/azure/config.example.env` and [PROJECT_OVERVIEW.md](./PROJECT_OVERVIEW.md) section 21.
+
 ## Full documentation
 
 Architecture, request lifecycle, env vars, tools, failure modes, and non-obvious behavior:

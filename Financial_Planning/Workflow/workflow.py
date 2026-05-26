@@ -35,7 +35,7 @@ from langgraph.graph import StateGraph, START, END
 from Financial_Planning.Models.client_data_state import ClientState
 from Financial_Planning.Nodes.basic_calculations_nodes import (calculate_age,asset_basket_classification, calculate_liquid_asset_value, calculate_fixed_assets_value, 
                                                               calculate_asset_percentages_and_ratios, invest_monthly_surplus, freed_emi_by_year, check_for_kid, check_for_pre_payment,
-                                                              update_ulip_current_values)
+                                                              update_ulip_current_values, calculate_term_insurance_requirement)
 from Financial_Planning.Nodes.goal_consolidation_nodes import (goals_future_value, add_goals)
 from Financial_Planning.Nodes.child_education_nodes import (calculate_education_funding, education_fees_calculation)
 from Financial_Planning.Nodes.retirement_nodes import (calculate_retirement_corpus, calculate_all_retirement_investments, retirement_goal)
@@ -54,6 +54,7 @@ graph.add_node('calculate_all_retirement_investments', calculate_all_retirement_
 graph.add_node('retirement_goal', retirement_goal)
 graph.add_node('asset_basket_classification', asset_basket_classification)
 graph.add_node('calculate_liquid_asset_value', calculate_liquid_asset_value)
+graph.add_node('calculate_term_insurance_requirement', calculate_term_insurance_requirement)
 graph.add_node('calculate_fixed_assets_value', calculate_fixed_assets_value)
 #graph.add_node('check_and_allocate_emergency_fund', check_and_allocate_emergency_fund)
 graph.add_node('plan_goals', plan_goals)
@@ -81,7 +82,8 @@ graph.add_edge('add_goals', 'update_ulip_current_values')
 graph.add_edge('update_ulip_current_values','asset_basket_classification')  
 graph.add_edge('asset_basket_classification', 'risk_appetite_assessment') 
 graph.add_edge('risk_appetite_assessment', 'calculate_liquid_asset_value')
-graph.add_edge('calculate_liquid_asset_value', 'calculate_fixed_assets_value')
+graph.add_edge('calculate_liquid_asset_value', 'calculate_term_insurance_requirement')
+graph.add_edge('calculate_term_insurance_requirement', 'calculate_fixed_assets_value')
 graph.add_edge('calculate_fixed_assets_value','calculate_asset_percentages_and_ratios')
 graph.add_edge('calculate_asset_percentages_and_ratios', 'goal_prioritization')
 graph.add_edge('goal_prioritization','freed_emi_by_year')

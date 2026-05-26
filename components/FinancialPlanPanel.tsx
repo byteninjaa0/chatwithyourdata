@@ -6,6 +6,7 @@ import {
   ArrowRightLeft,
   Heart,
   Landmark,
+  Shield,
   Sparkles,
   Target,
 } from "lucide-react";
@@ -56,6 +57,12 @@ type PlanSummary = {
   final_unused_monthly_surplus?: number | null;
   retirement_goal_preview?: unknown;
   ssy_summary_preview?: SsySummaryEntry[];
+  term_insurance_requirement?: {
+    section?: string;
+    total_cover_required?: number;
+    breakdown?: Record<string, number>;
+    note?: string;
+  } | null;
 };
 
 type PlanResponse = { ok?: boolean; summary?: PlanSummary; detail?: string };
@@ -711,6 +718,67 @@ export function FinancialPlanPanel({
                   ]}
                 />
               </div>
+
+              {s.term_insurance_requirement ? (
+                <div className="mb-7">
+                  <ReviewSectionTitle icon={Shield}>
+                    Term insurance requirement
+                  </ReviewSectionTitle>
+                  <div className="overflow-x-auto rounded-lg border border-slate-200 dark:border-slate-700">
+                    <table className="w-full min-w-[320px] text-left text-sm">
+                      <thead className="bg-slate-100 text-[0.72rem] font-bold uppercase tracking-wide text-slate-600 dark:bg-slate-800 dark:text-slate-300">
+                        <tr>
+                          <th className="px-4 py-2.5">Component</th>
+                          <th className="px-4 py-2.5 text-right">Amount (₹)</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-slate-200 dark:divide-slate-700">
+                        {[
+                          ["Income Replacement Corpus", s.term_insurance_requirement.breakdown?.income_replacement_corpus],
+                          ["Children's Education Cost", s.term_insurance_requirement.breakdown?.kids_education_cost],
+                          ["Outstanding Liabilities", s.term_insurance_requirement.breakdown?.outstanding_liabilities],
+                          [
+                            "Less: Existing Insurance Cover",
+                            s.term_insurance_requirement.breakdown?.less_existing_cover != null
+                              ? Math.abs(s.term_insurance_requirement.breakdown.less_existing_cover)
+                              : undefined,
+                            true,
+                          ],
+                          [
+                            "Less: Liquid Assets",
+                            s.term_insurance_requirement.breakdown?.less_liquid_assets != null
+                              ? Math.abs(s.term_insurance_requirement.breakdown.less_liquid_assets)
+                              : undefined,
+                            true,
+                          ],
+                        ].map(([label, amount, isDeduction]) => (
+                          <tr key={String(label)} className="bg-white dark:bg-slate-900">
+                            <td className="px-4 py-2.5 text-slate-700 dark:text-slate-200">{label}</td>
+                            <td className="px-4 py-2.5 text-right font-medium text-slate-900 dark:text-slate-100">
+                              {isDeduction ? `(${fmtInr(amount as number).replace("₹", "")})` : fmtInr(amount as number)}
+                            </td>
+                          </tr>
+                        ))}
+                        <tr className="bg-slate-50 font-semibold dark:bg-slate-800/80">
+                          <td className="px-4 py-3 text-slate-900 dark:text-slate-100">
+                            Total Term Cover Required
+                          </td>
+                          <td className="px-4 py-3 text-right text-slate-900 dark:text-slate-100">
+                            {fmtInr(s.term_insurance_requirement.total_cover_required)}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  {s.term_insurance_requirement.note ? (
+                    <p className="mt-3 text-[0.85rem] leading-relaxed text-slate-600 dark:text-slate-400">
+                      {(s.term_insurance_requirement.total_cover_required ?? 0) === 0
+                        ? "Existing cover and liquid assets are sufficient."
+                        : s.term_insurance_requirement.note}
+                    </p>
+                  ) : null}
+                </div>
+              ) : null}
 
               {/* Goal allocations — cards like reference HTML */}
               {s.goal_allocation_preview && s.goal_allocation_preview.length > 0 ? (

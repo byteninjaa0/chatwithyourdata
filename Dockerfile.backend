@@ -1,0 +1,15 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+COPY requirements.txt backend/requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY backend/ backend/
+COPY Financial_Planning/ Financial_Planning/
+
+ENV PYTHONUNBUFFERED=1
+ENV FASTAPI_PORT=8001
+
+EXPOSE 8001
+CMD ["python", "backend/airtable_main.py"]

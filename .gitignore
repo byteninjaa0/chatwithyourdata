@@ -35,6 +35,7 @@ yarn-error.log*
 # env (keep .env.example committed)
 .env
 .env.local
+deploy/azure/config.env
 .env.development.local
 .env.test.local
 .env.production.local

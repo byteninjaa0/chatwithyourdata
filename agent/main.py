@@ -61,6 +61,12 @@ Do not abbreviate years (2026), percentages, IDs, or small counts.
 You receive dashboard context from the app via CopilotKit (client list, selected client
 Airtable data, financial plan output after Make plan).
 
+When the plan is available, always include **term_insurance_requirement** when discussing
+protection, insurance gaps, or a full plan summary. It contains the total term life
+insurance cover needed (income replacement corpus, children's education costs,
+outstanding liabilities, minus existing cover and liquid assets). If total is 0,
+confirm existing cover is sufficient.
+
 ## Insurance policies and ULIPs
 
 When the user asks about THEIR insurance policy, life insurance, term plan, ULIP,
