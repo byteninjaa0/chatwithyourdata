@@ -6,6 +6,7 @@ import {
   ArrowRightLeft,
   Heart,
   Landmark,
+  Shield,
   Sparkles,
   Target,
 } from "lucide-react";
@@ -56,6 +57,12 @@ type PlanSummary = {
   final_unused_monthly_surplus?: number | null;
   retirement_goal_preview?: unknown;
   ssy_summary_preview?: SsySummaryEntry[];
+  term_insurance_requirement?: {
+    section?: string;
+    total_cover_required?: number;
+    breakdown?: Record<string, number>;
+    note?: string;
+  } | null;
 };
 
 type PlanResponse = { ok?: boolean; summary?: PlanSummary; detail?: string };
@@ -711,6 +718,55 @@ export function FinancialPlanPanel({
                   ]}
                 />
               </div>
+
+              {s.term_insurance_requirement ? (
+                <div className="mb-7">
+                  <ReviewSectionTitle icon={Shield}>
+                    Term insurance requirement
+                  </ReviewSectionTitle>
+                  <div className="overflow-x-auto rounded-lg border border-slate-200 dark:border-slate-700">
+                    <table className="w-full min-w-[320px] text-left text-sm">
+                      <thead className="bg-slate-100 text-[0.72rem] font-bold uppercase tracking-wide text-slate-600 dark:bg-slate-800 dark:text-slate-300">
+                        <tr>
+                          <th className="px-4 py-2.5">Component</th>
+                          <th className="px-4 py-2.5 text-right">Amount (₹)</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {Object.entries(s.term_insurance_requirement.breakdown ?? {}).map(
+                          ([key, val]) => (
+                            <tr
+                              key={key}
+                              className="border-b border-slate-200 dark:border-slate-700"
+                            >
+                              <td className="px-4 py-2.5 capitalize text-slate-700 dark:text-slate-300">
+                                {key.replace(/_/g, " ")}
+                              </td>
+                              <td className="px-4 py-2.5 text-right font-medium text-slate-900 dark:text-slate-100">
+                                {fmtInr(Math.abs(Number(val)))}
+                                {Number(val) < 0 ? " (deduction)" : ""}
+                              </td>
+                            </tr>
+                          ),
+                        )}
+                        <tr className="bg-slate-50 font-semibold dark:bg-slate-800/80">
+                          <td className="px-4 py-2.5 text-slate-900 dark:text-slate-100">
+                            Total cover required
+                          </td>
+                          <td className="px-4 py-2.5 text-right text-slate-900 dark:text-slate-100">
+                            {fmtInr(s.term_insurance_requirement.total_cover_required)}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  {s.term_insurance_requirement.note ? (
+                    <p className="mt-2.5 text-[0.82rem] leading-relaxed text-slate-600 dark:text-slate-400">
+                      {s.term_insurance_requirement.note}
+                    </p>
+                  ) : null}
+                </div>
+              ) : null}
 
               {/* Goal allocations — cards like reference HTML */}
               {s.goal_allocation_preview && s.goal_allocation_preview.length > 0 ? (

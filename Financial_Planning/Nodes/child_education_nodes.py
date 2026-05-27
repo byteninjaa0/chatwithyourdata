@@ -20,6 +20,7 @@ from Financial_Planning.education_fee_defaults import (
     DEFAULT_GRADUATION_FEES,
     DEFAULT_POST_GRADUATION_FEES,
 )
+from Financial_Planning.education_target_years import compute_education_target_years
 
 
 def _fee_scrapper_dir() -> Path:
@@ -132,11 +133,13 @@ def calculate_education_funding(state: ClientState):
     print("--------------------------"*6)
     print("\n")
     print("Node: calculate_education_funding \n")
+    print("[calculate_education_funding] UG start age=18; durations from stream mapping + Other Airtable fields\n")
     print("Calculating the future value of the education fees and defines education goal for each child... \n")
     client_data=state['client_data']
     
     today = date.today()
     education_goals = []
+    education_target_years_by_child: dict = {}
     
     # 1. Consolidate all education goals into a single list
     for child in client_data['education_planning']:
@@ -149,13 +152,15 @@ def calculate_education_funding(state: ClientState):
         if not child_dob:
             continue
 
-        # Undergraduate (UG) Goal
-        ug_target_year = child_dob.year + 18                            # ug target year is not provided as input in the current form, so default year is choosen is considered when the child reaches at the age of 18.
-        ug_years_to_goal = ug_target_year - today.year   
-        print(f'child: {child}')                
+        targets = compute_education_target_years(child, child_dob, reference_date=today)
+        education_target_years_by_child[child['name_of_kid']] = targets
+
+        ug_target_year = targets['ug_target_year']
+        ug_years_to_goal = ug_target_year - today.year
+        print(f'child: {child}, targets: {targets}')
         education_goals.append({
             "name": child['name_of_kid'],
-            "type": 'UG',                     #"under_graduation",
+            "type": 'UG',
             "stream": child['graduation_stream'],
             "destination": child['graduation_destination'],
             "target_year": ug_target_year,
@@ -163,26 +168,33 @@ def calculate_education_funding(state: ClientState):
             "current_cost": child['current_fees_of_graduation'],
             "allocated_funds": child.get('fund_allocated_for_graduation', 0),
             "schemes": child.get('scheme_for_education', []),
-            'funded_from': []
+            'funded_from': [],
+            "ug_duration": targets['ug_duration'],
+            "ug_start_year": targets['ug_start_year'],
+            "pg_stream": targets.get('pg_stream'),
+            "pg_duration": targets.get('pg_duration'),
+            "pg_target_year": targets.get('pg_target_year'),
         })
 
-        if (child.get("post_graduation_destination") not in [None, 'NA'] and 
-            child.get("post_graduation_stream") not in [None, 'NA']):
-            # print(child)
-            # Postgraduate (PG) Goal
-            pg_target_year = child_dob.year + 22                         # similarly target year of post graduation is not given, so default choosen when the child reaches the age 22.
-            pg_years_to_goal = pg_target_year - today.year       
+        pg_target_year = targets.get('pg_target_year')
+        if pg_target_year is not None and targets.get('pg_duration', 0) > 0:
+            pg_years_to_goal = pg_target_year - today.year
             education_goals.append({
                 "name": child['name_of_kid'],
-                "type": "PG",                   #"post_graduation",
-                "stream": child["post_graduation_destination"],
-                "destination": child['graduation_destination'],
+                "type": "PG",
+                "stream": child.get("post_graduation_stream"),
+                "destination": child.get('post_graduation_destination'),
                 "target_year": pg_target_year,
-                "years_to_goal": pg_years_to_goal, 
+                "years_to_goal": pg_years_to_goal,
                 "current_cost": child['current_fees_of_post_graduation'],
-                "allocated_funds": child.get('fund_allocated_for_post_graduation',0),
+                "allocated_funds": child.get('fund_allocated_for_post_graduation', 0),
                 "schemes": child.get('scheme_for_education', []),
-                'funded_from': []
+                'funded_from': [],
+                "ug_duration": targets['ug_duration'],
+                "ug_start_year": targets['ug_start_year'],
+                "pg_stream": targets.get('pg_stream'),
+                "pg_duration": targets.get('pg_duration'),
+                "pg_target_year": pg_target_year,
             })
         
     # 2. Sort goals chronologically by target year
@@ -280,6 +292,7 @@ def calculate_education_funding(state: ClientState):
     
     # 4. Attach the detailed plan to the original client data for a complete report
     client_data['education_planning_summary'] = education_goals
+    client_data['education_target_years_by_child'] = education_target_years_by_child
 
     education_planning=[]
     for goal in education_goals:

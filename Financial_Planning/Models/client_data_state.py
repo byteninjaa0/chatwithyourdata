@@ -57,6 +57,7 @@ class ClientState(TypedDict):
     sip_for_goal : list
     emergency_fund_status : dict
     ulip_opportunity_cost_data : dict
+    term_insurance_summary: dict
 
 class AgentState(TypedDict):
     messages: Annotated[list[AnyMessage], add]

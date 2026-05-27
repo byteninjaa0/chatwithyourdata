@@ -168,6 +168,102 @@ def _build_real_estate_preview(client_payload: dict) -> list[dict]:
     return [dict(x) for x in items if isinstance(x, dict)]
 
 
+def _education_funding_status(goal: dict) -> str:
+    gap = goal.get("final_gap")
+    if gap is None:
+        gap = goal.get("corpus_gap")
+    try:
+        gap_f = float(gap) if gap is not None else None
+    except (TypeError, ValueError):
+        gap_f = None
+    funded_from = goal.get("funded_from") or []
+    if gap_f is not None and gap_f <= 0:
+        return "funded"
+    if funded_from:
+        return "partial"
+    return "not_funded"
+
+
+def _build_education_planning_preview(state: dict, client_payload: dict) -> list[dict]:
+    """Per-child UG/PG costs and funding from education_planning_summary (post Make Plan)."""
+    cd = client_payload if isinstance(client_payload, dict) else {}
+    summary = cd.get("education_planning_summary") or []
+    if not isinstance(summary, list) or not summary:
+        return []
+
+    inner = cd.get("client_data") or {}
+    children = inner.get("children") or []
+    dob_map = {
+        str(c.get("child_name")): c.get("child_dob")
+        for c in children
+        if isinstance(c, dict) and c.get("child_name")
+    }
+    targets_map = cd.get("education_target_years_by_child") or {}
+
+    blocks: dict[str, dict] = {}
+    for goal in summary:
+        if not isinstance(goal, dict):
+            continue
+        name = str(goal.get("name") or "").strip()
+        gtype = goal.get("type")
+        if not name or gtype not in ("UG", "PG"):
+            continue
+        if name not in blocks:
+            row: dict = {"child_name": name, "dob": dob_map.get(name)}
+            t = targets_map.get(name) if isinstance(targets_map, dict) else None
+            if isinstance(t, dict):
+                row.update(t)
+            blocks[name] = row
+        side = "ug" if gtype == "UG" else "pg"
+        blocks[name][f"{side}_stream"] = goal.get("stream")
+        blocks[name][f"{side}_destination"] = goal.get("destination")
+        blocks[name][f"{side}_current_cost"] = goal.get("current_cost")
+        blocks[name][f"{side}_future_cost"] = goal.get("future_cost")
+        blocks[name][f"{side}_corpus_gap"] = goal.get("final_gap")
+        blocks[name][f"{side}_target_year"] = goal.get("target_year")
+        blocks[name][f"{side}_status"] = _education_funding_status(goal)
+
+    return list(blocks.values())
+
+
+def _build_education_targets_preview(state: dict, client_payload: dict) -> list[dict]:
+    cd = client_payload if isinstance(client_payload, dict) else {}
+    by_child = cd.get("education_target_years_by_child")
+    if isinstance(by_child, dict) and by_child:
+        rows: list[dict] = []
+        for child_name, targets in by_child.items():
+            if not isinstance(targets, dict):
+                continue
+            rows.append({"child_name": child_name, **targets})
+        return rows
+
+    summary = cd.get("education_planning_summary") or []
+    if not isinstance(summary, list):
+        return []
+
+    seen: set[str] = set()
+    rows = []
+    for goal in summary:
+        if not isinstance(goal, dict) or goal.get("type") != "UG":
+            continue
+        name = goal.get("name")
+        if not name or name in seen:
+            continue
+        seen.add(name)
+        rows.append(
+            {
+                "child_name": name,
+                "ug_duration": goal.get("ug_duration"),
+                "ug_start_year": goal.get("ug_start_year"),
+                "ug_target_year": goal.get("target_year"),
+                "pg_stream": goal.get("pg_stream"),
+                "pg_duration": goal.get("pg_duration"),
+                "pg_target_year": goal.get("pg_target_year"),
+            }
+        )
+    return rows
+
+
 def summarize_plan_state(state: dict) -> dict:
     """Compact view for API / UI (full state can be very large)."""
     cd = state.get("client_data") or {}
@@ -404,6 +500,50 @@ def summarize_plan_state(state: dict) -> dict:
         state, cd if isinstance(cd, dict) else {}
     )
     real_estate_preview = _build_real_estate_preview(cd if isinstance(cd, dict) else {})
+    education_targets_preview = _build_education_targets_preview(
+        state, cd if isinstance(cd, dict) else {}
+    )
+    education_planning_preview = _build_education_planning_preview(
+        state, cd if isinstance(cd, dict) else {}
+    )
+
+    term_insurance_requirement = None
+    term = state.get("term_insurance_summary") or {}
+    if term:
+        def _num(v):
+            if v is None:
+                return 0
+            try:
+                return int(float(v))
+            except (TypeError, ValueError):
+                return 0
+
+        pv = _num(term.get("pv_of_expenses", 0))
+        edu = _num(term.get("kids_education_cost", 0))
+        liab = _num(term.get("current_liabilities", 0))
+        cover = _num(term.get("existing_cover", 0))
+        liquid = _num(term.get("liquidable_assets", 0))
+        total = _num(term.get("total_term_required", 0))
+
+        term_insurance_requirement = {
+            "section": "Term Insurance Requirement",
+            "total_cover_required": total,
+            "breakdown": {
+                "income_replacement_corpus": pv,
+                "kids_education_cost": edu,
+                "outstanding_liabilities": liab,
+                "less_existing_cover": -cover,
+                "less_liquid_assets": -liquid,
+            },
+            "note": (
+                f"Client needs a total term cover of ₹{total:,}. "
+                f"This accounts for income replacement (₹{pv:,}), "
+                f"children's education (₹{edu:,}), "
+                f"outstanding liabilities (₹{liab:,}), "
+                f"less existing cover (₹{cover:,}) "
+                f"and liquid assets (₹{liquid:,})."
+            ),
+        }
 
     return {
         "client_name": name,
@@ -427,6 +567,9 @@ def summarize_plan_state(state: dict) -> dict:
         "spouse_preview": spouse_preview,
         "marriage_goals_preview": marriage_goals_preview,
         "real_estate_preview": real_estate_preview,
+        "education_targets_preview": education_targets_preview,
+        "education_planning_preview": education_planning_preview,
+        "term_insurance_requirement": term_insurance_requirement,
     }
 
 

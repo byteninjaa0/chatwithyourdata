@@ -146,5 +146,81 @@ End each task with a short structured report:
 
 ---
 
+## 9. CANONICAL FILE MAP (verify before editing; update if moved)
+
+- Graph definition / node wiring: Financial_Planning/Workflow/workflow.py
+- Calculation nodes: Financial_Planning/Nodes/basic_calculations_nodes.py
+- Agentic nodes: Financial_Planning/Nodes/agentic_nodes.py
+- State model: Financial_Planning/Models/client_data_state.py
+- Plan output assembly: backend/financial_plan_runner.py → summarize_plan_state()
+- Airtable entry/data source: backend/airtable_main.py
+- Planning-workflow LLM agent: Financial_Planning/Agent/agent.py
+- Chat/supervisor agent (separate): agent/main.py
+- Custom tools: Financial_Planning/Tools/custom_tools.py
+- Forex (live USD/INR) utility: Financial_Planning/Utilities/forex_utils.py
+- Plan UI panel: components/FinancialPlanPanel.tsx
+- PPT builder (uses self.final_state): Financial_Planning/Utilities/ppt_builder.py
+
+There are TWO separate agents — the planning agent and the chat
+supervisor (`dashboard_agent`). A change to one does not affect
+the other. Confirm which one a task targets before editing.
+
+---
+
+## 10. UI RENDERING STANDARDS (frontend plan panel)
+
+- NEVER render invented/mock fields. Read the real schema from
+  airtable_main.py and client_data_state.py first; render only
+  fields the client actually submitted. Missing values show "—".
+- New sections must visually match the Overview section — reuse
+  its table component / className strings, not an approximation.
+- Tables: w-full, border-collapse, uniform padding (py-2 px-4, do
+  not mix px-3/px-4 within one table), rows border-b, cells
+  align-middle.
+- Header alignment MUST match its column's value alignment:
+  text labels left, numeric/currency right, status/badges center.
+- Tables sit flush at the top of their section: title mb-2, table
+  immediately below, first child mt-0; inter-section spacing via
+  parent space-y-*.
+- Header cell count == body cell count == footer cell count after
+  any column add/remove; fix footer colSpan accordingly.
+- Nested categories (ESOP vested/unvested, RSU, multiple policies,
+  etc.) render as their own mini-table with dynamic columns + a
+  Total row — never flattened to a single value. Treat all such
+  multi-type parameters the same way.
+- Currency: ₹${Number(v).toLocaleString('en-IN')}.
+- DATA vs DISPLAY: relocating where an item is shown (e.g. the
+  kids' marriage goal under Kids Details) must NOT change its
+  underlying classification, funding, or any calculation. Use a
+  display-level filter, not a data edit.
+
+---
+
+## 11. KNOWN PITFALLS (check these proactively)
+
+- CopilotKit/AG-UI is async: any AgentMiddleware must implement
+  BOTH wrap_model_call AND awrap_model_call; streamed agent nodes
+  must be async def using ainvoke/astream. Never wrap the compiled
+  graph in a sync function for CopilotKit.
+- State key loss: a node returning {"k": v} can drop other keys if
+  it replaces state instead of merging. Preserve existing keys
+  (return {**state, ...} or rely on the reducer). This is the usual
+  cause of a previously-working section (e.g. term_insurance_summary)
+  going missing from output.
+- "Section missing from make_plan" regressions: trace node → state →
+  summarize_plan_state() → UI render/whitelist with temporary logs to
+  find the exact break point; fix only that point (per sections 1 & 3).
+- USD/INR and any FX: always via forex_utils.get_usd_inr_rate()
+  (live, cached, with fallback) — never hardcoded. Sanity range
+  ~88–110. Show the rate + source in output for transparency.
+- Dates: deterministic Python nodes use date.today() directly
+  (correct, leave them). LLM sub-agents get the date via the
+  get_current_date tool; never hardcode a date in a prompt.
+- File-path I/O (Errno 22): sanitize any client/goal name used in a
+  filename (strip \ / : * ? " < > | and newlines); ensure parent
+  dirs exist; use os.path.join / pathlib, not string concatenation.
+
+---
+
 When in doubt: read the code first, make the smallest correct change, write tests, run
 them, and report honestly.

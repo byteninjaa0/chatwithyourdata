@@ -664,6 +664,63 @@ def calculate_liquid_asset_value(state: ClientState):
     print("--------------------------"*6)
     return {'liquid_pool': round(total_asset_value, 2)}
 
+
+def calculate_term_insurance_requirement(state: ClientState):
+    """
+    Calculates the total term insurance cover required for the client
+    based on income replacement, liabilities, education costs and
+    existing cover / liquid assets.
+    """
+    print("--------------------------"*6)
+    print("\n")
+    print("Node: calculate_term_insurance_requirement \n")
+    print("Calculating term insurance requirement... \n")
+
+    client_info = state.get('required_retirement_corpus', {}).get('client_info', {})
+    monthly_expenses = client_info.get('current_monthly_expenses', 0)
+    inflation_rate = 0.06
+    pv_of_expenses = int(monthly_expenses * 12 / inflation_rate) if inflation_rate else 0
+
+    kids_education_cost = sum(
+        edu.get('future_cost', 0)
+        for edu in state.get('client_data', {}).get('education_planning_summary', [])
+    )
+
+    current_liabilities = sum(
+        liability.get('outstanding_balance', 0)
+        for liability in state.get('liabilities', [])
+    )
+
+    existing_cover = sum(
+        policy.get('maturity_value', 0)
+        for policy in state.get('client_data', {}).get('insurance_policies', [])
+    )
+
+    liquidable_assets = state.get('liquid_pool', 0)
+
+    total_term_required = (
+        pv_of_expenses
+        + kids_education_cost
+        + current_liabilities
+        - existing_cover
+        - liquidable_assets
+    )
+    total_term_required = max(total_term_required, 0)
+
+    term_insurance_summary = {
+        "pv_of_expenses": pv_of_expenses,
+        "kids_education_cost": kids_education_cost,
+        "current_liabilities": current_liabilities,
+        "existing_cover": existing_cover,
+        "liquidable_assets": liquidable_assets,
+        "total_term_required": total_term_required,
+    }
+
+    print(f" Total term cover required: {total_term_required}\n")
+    print("--------------------------"*6)
+    return {"term_insurance_summary": term_insurance_summary}
+
+
 def calculate_fixed_assets_value(state: ClientState):
     """
     Calculates the total current value of fixed assets from a list.

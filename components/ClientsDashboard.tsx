@@ -10,6 +10,9 @@ import { DashboardSidebar } from "./DashboardSidebar";
 import { SpouseDetailsPanel, mergeSpouseData, type SpouseData } from "./SpouseDetailsPanel";
 import { RealEstateTable, type RealEstateProperty } from "./RealEstateTable";
 import { MarriageGoalsSection, type MarriageGoalRow } from "./MarriageGoalsSection";
+import { EducationPlanningSection } from "./EducationPlanningSection";
+import { buildEducationPlanningBlocks, type EducationPlanningPreviewRow } from "@/lib/educationPlanningView";
+import type { EducationTargetYears } from "@/lib/educationTargetYear";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -62,7 +65,16 @@ interface ClientDetail {
     };
     financial_goals: { goal_name: string; capital_required_today: number; target_year: number }[];
     liabilities: { type: string; outstanding_balance: number; emi_amount: number; interest_rate: number }[];
-    education_planning: { name_of_kid: string; dob: string; graduation_stream: string; graduation_destination: string; post_graduation_stream: string; post_graduation_destination: string }[];
+    education_planning: {
+      name_of_kid: string;
+      dob: string;
+      graduation_stream: string;
+      graduation_destination: string;
+      course_duration_ug?: number | null;
+      post_graduation_stream: string;
+      post_graduation_destination: string;
+      course_duration_pg?: number | null;
+    }[];
     life_insurance: { company_name: string; coverage_value: number }[];
   };
 }
@@ -586,6 +598,11 @@ export function ClientsDashboard() {
   // ── Goals & liabilities shorthand ─────────────────────────────────────────
   const goals      = detail?.client_data?.financial_goals ?? [];
   const liabilities = detail?.client_data?.liabilities ?? [];
+  const liabilitiesToShow = liabilities.filter((item) => {
+    const type = String(item.type ?? "").toLowerCase();
+    const name = String((item as { name?: string }).name ?? "").toLowerCase();
+    return !type.includes("marriage") && !name.includes("marriage");
+  });
   const eduPlans   = detail?.client_data?.education_planning ?? [];
   const lifeIns    = detail?.client_data?.life_insurance ?? [];
   const kids       = cd?.children ?? [];
@@ -612,6 +629,13 @@ export function ClientsDashboard() {
         status: "not_funded",
       }));
   })();
+
+  const educationBlocks = buildEducationPlanningBlocks(eduPlans, kids, {
+    targetsPreview: (planResult?.summary?.education_targets_preview ?? []) as Array<
+      EducationTargetYears & { child_name?: string }
+    >,
+    planningPreview: (planResult?.summary?.education_planning_preview ?? []) as EducationPlanningPreviewRow[],
+  });
 
   const realEstateProperties: RealEstateProperty[] =
     ((planResult?.summary?.real_estate_preview as RealEstateProperty[] | undefined)?.length
@@ -842,10 +866,7 @@ export function ClientsDashboard() {
 
                     {eduPlans.length > 0 && <>
                       <SectionLabel icon="🎓" text="Education Planning" />
-                      <DataTable rows={eduPlans.map(e => ({
-                        Kid: e.name_of_kid, "UG Stream": e.graduation_stream || "—", "UG Destination": e.graduation_destination || "—",
-                        "PG Stream": e.post_graduation_stream || "—", "PG Destination": e.post_graduation_destination || "—",
-                      }))} />
+                      <EducationPlanningSection blocks={educationBlocks} />
                     </>}
 
                     <MarriageGoalsSection goals={marriageGoals} />
@@ -867,11 +888,11 @@ export function ClientsDashboard() {
                 {activeTab === "liabilities" && (
                   <>
                     <SectionLabel icon="⚠️" text="Liabilities" />
-                    <DataTable rows={liabilities.length ? liabilities.map(l => ({
+                    <DataTable rows={liabilitiesToShow.length ? liabilitiesToShow.map(l => ({
                       Type: l.type, "Outstanding": inr(l.outstanding_balance),
                       "EMI / mo": inr(l.emi_amount), "Interest Rate": pct(l.interest_rate),
                     })) : []} />
-                    {liabilities.length === 0 && <p className="text-xs italic text-gray-400 dark:text-gray-500">No liabilities recorded.</p>}
+                    {liabilitiesToShow.length === 0 && <p className="text-xs italic text-gray-400 dark:text-gray-500">No liabilities recorded.</p>}
 
                     <SectionLabel icon="🎯" text="Financial Goals" />
                     <DataTable rows={goals.length ? goals.map(g => ({

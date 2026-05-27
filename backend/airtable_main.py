@@ -460,6 +460,8 @@ def airtable_record_to_client_data(fields: dict) -> dict:
             "dob":                           child["child_dob"],
             "graduation_stream":             _s(f"{p}graduation_stream"),
             "graduation_destination":        _s(f"{p}graduation_destination"),
+            "course_duration_ug":            _i(f"{p}course_duration_ug") or None,
+            "course_duration_pg":            _i(f"{p}course_duration_pg") or None,
             "fund_allocated_for_graduation": 0,
             "post_graduation_stream":        _s(f"{p}post_graduation_stream"),
             "post_graduation_destination":   _s(f"{p}post_graduation_destination"),
