@@ -90,6 +90,12 @@ Make the "Target Amount" cell an editable number input and lift its value via pr
   - PG: `value={targets[child.name]?.pg ?? ""}` `onChange={(v) => onTargetChange(child.name, "pg", v)}`
 - Keep Stream / Course Duration / Target Year columns exactly as they are. Update the JSDoc note above
   `StageTable` (currently says Target Amount = future_cost) to reflect that it is now a user input.
+- **Do not show the post-plan "updated" figure here (request #2):** the Target Amount cell binds to the
+  user's `educationTargets` value only. It must **not** be overwritten by the plan preview's
+  `ug_future_cost` / `pg_future_cost` after Make plan. (The bound input already does this; just confirm
+  `stage.futureCost` is no longer rendered in this cell and the preview value is not substituted in.)
+  Stream / destination / target-year may still come from the preview; only the Target Amount stays the
+  user-entered value.
 
 ### 2. `components/ClientsDashboard.tsx` (edit)
 - **State (near line 470):**
@@ -271,6 +277,9 @@ Ports **3000** (UI) and **8001** (data/plan API). No env var changes. A full Mak
    → that child's `ug_future_cost == 5000000`.
 5. **No regression:** `curl :8001/health` → `{"status":"ok"}`; a client with **no children** runs Make
    plan with no warning and no `education_targets` (unchanged behavior); `npm test` stays green.
+6. **Request #2 — entered value persists post-plan:** after a successful Make plan, the Education
+   Planning "Target Amount" still shows the value the user typed (not a post-plan recomputed/updated
+   figure); switching clients clears it.
 
 ## Tests
 - **Node unit test (recommended):** `Financial_Planning/tests/test_education_funding_override.py` —
