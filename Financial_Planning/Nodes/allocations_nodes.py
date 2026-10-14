@@ -93,6 +93,88 @@ def calculate_fv_after_one_year(funded_from: list, r_annual: float = 0.08) -> fl
     
     return round(total_fv)
 
+def project_ssy_accounts(state, ssy_tracker, goal_results, ssy_interest_rate=0.082):
+    """
+    Read-only projection of every Sukanya Samriddhi account to its maturity.
+
+    plan_goals values an SSY account only in the year a goal draws on it, so
+    an account no goal uses, or the balance left locked after a partial
+    withdrawal, never gets a value at maturity. This records one, for display
+    (the plan deck). It reads the same inputs apply_ssy_to_goal reads and
+    uses the same calculate_ssy_future_value(), and changes nothing: not the
+    tracker, not the goals, not any surplus or pool.
+
+    Returns one entry per account:
+        child_name, opening_date, contribution_end_year, maturity_year,
+        annual_contribution, current_value, interest_rate,
+        maturity_value            -- whole account at maturity, no withdrawals
+        withdrawals               -- [{goal, year, amount}] the plan takes from it
+        balance_at_maturity       -- what is left at maturity after those withdrawals
+    """
+    projections = []
+    current_year = datetime.today().year
+    children = state.get('client_data', {}).get('client_data', {}).get('children', []) or []
+    for child in children:
+        full_name = child.get('child_name', '')
+        first_name = full_name.split(" ")[0]
+        for inv in child.get('investments', []) or []:
+            if str(inv.get('type', '')).upper() != 'SUKANYA SAMRIDDHI YOJANA':
+                continue
+            try:
+                opening = datetime.strptime(inv.get('commencement_date'), '%Y-%m-%d').date()
+                dob_text = child.get('child_dob')
+                dob = datetime.strptime(dob_text, '%Y-%m-%d').date() if dob_text else opening
+            except (TypeError, ValueError) as e:
+                print(f"SSY projection skipped for {full_name}: {e}")
+                continue
+            maturity_year = opening.year + 21
+            entry = {
+                'child_name': full_name,
+                'opening_date': opening.isoformat(),
+                'contribution_end_year': opening.year + 15,
+                'maturity_year': maturity_year,
+                'annual_contribution': float(inv.get('annual_contribution') or 0),
+                'current_value': float(inv.get('current_value') or 0),
+                'interest_rate': ssy_interest_rate,
+                'maturity_value': None,
+                'withdrawals': [],
+                'balance_at_maturity': None,
+            }
+            if maturity_year >= current_year:
+                result = calculate_ssy_future_value(
+                    current_value=inv.get('current_value') or 0,
+                    annual_contribution=inv.get('annual_contribution') or 0,
+                    account_opening_date=opening,
+                    girl_child_dob=dob,
+                    goal_target_year=maturity_year,
+                    goal_type='other',
+                    ssy_interest_rate=ssy_interest_rate,
+                )
+                entry['maturity_value'] = result.get('total_fv_at_goal')
+
+            for goal in goal_results or []:
+                note = goal.get('note')
+                drawn_in = note.get('to_year') if isinstance(note, dict) and note.get('to_year') else goal.get('target_year')
+                for src in goal.get('funded_from', []) or []:
+                    if src.get('type') == 'ssy_funds' and src.get('source') == f'SSY account of {first_name}':
+                        entry['withdrawals'].append({
+                            'goal': goal.get('goal_name'),
+                            'year': drawn_in,
+                            'amount': src.get('amount_used'),
+                        })
+
+            tracked = (ssy_tracker or {}).get(first_name)
+            if tracked:
+                # Same growth step apply_ssy_to_goal uses for a locked balance.
+                remaining = float(tracked.get('remaining_balance') or 0)
+                years = maturity_year - int(tracked.get('last_withdrawal_year') or maturity_year)
+                entry['balance_at_maturity'] = round(remaining * ((1 + ssy_interest_rate) ** max(years, 0)))
+            else:
+                entry['balance_at_maturity'] = entry['maturity_value']
+            projections.append(entry)
+    return projections
+
+
 def plan_goals(state: ClientState):
     """
     Allocates available resources (liquid pool, monthly surplus, freed SIPs) 
@@ -352,8 +434,12 @@ def plan_goals(state: ClientState):
                 continue
             
             gap = round(goal["corpus_needed"])
-            funded_from = [] 
-            local_freed=filtered_freed_sip_for_goal(g,freed_sip,retirement_year) 
+            funded_from = []
+            # apply_ssy_to_goal updates ssy_tracker in place. Like the local_*
+            # copies below, an attempt that does not fund the goal must not
+            # use up SSY, so the tracker is restored if this attempt fails.
+            ssy_tracker_before_attempt = copy.deepcopy(ssy_tracker)
+            local_freed=filtered_freed_sip_for_goal(g,freed_sip,retirement_year)
             local_surplus = monthly_surplus
             local_liquid = liquid_pool
             
@@ -686,8 +772,11 @@ def plan_goals(state: ClientState):
                 liquid_pool = local_liquid
                 freed_sip = local_freed
                 achieved = True
-                break 
-            # else: try next postponement year
+                break
+            # else: try next postponement year -- this attempt failed, so undo
+            # any SSY withdrawal it recorded (its funded_from is discarded too).
+            ssy_tracker.clear()
+            ssy_tracker.update(ssy_tracker_before_attempt)
         
         # print(f"freed_sip: {freed_sip}")
         if not achieved: 
@@ -967,6 +1056,9 @@ def plan_goals(state: ClientState):
         "ending_freed_sip_schedule": freed_sip,
         "rsu_portfolio": rsu_portfolio,
         "ssy_tracker": ssy_tracker,
+        # Display-only: each SSY account projected to maturity. Read by the
+        # plan deck; nothing in the workflow reads it.
+        "ssy_projection": project_ssy_accounts(state, ssy_tracker, results),
     }
 
     if state['loans_exist'] == True:

@@ -1,0 +1,3884 @@
+{
+  "source": "Goal Based Plan Presentation Template 11Sep'26.pptx",
+  "slides": 49,
+  "tokens": {
+    "action_1_desc": {
+      "sample": "Move ₹10 lakh of the deposit book into the retirement portfolio as a lumpsum.",
+      "slides": [
+        44
+      ]
+    },
+    "action_1_title": {
+      "sample": "Exit from FD or reallocate",
+      "slides": [
+        44
+      ]
+    },
+    "action_2_desc": {
+      "sample": "The ₹21,700 surplus as a SIP plus ₹10 lakh from the FD book adds ₹0.81 crore by 2036.",
+      "slides": [
+        44
+      ]
+    },
+    "action_2_title": {
+      "sample": "Savings for retirement",
+      "slides": [
+        44
+      ]
+    },
+    "action_3_desc": {
+      "sample": "Every ₹10,000 a month trimmed today lowers the corpus required by about ₹42 lakh.",
+      "slides": [
+        44
+      ]
+    },
+    "action_3_title": {
+      "sample": "Reduce your expense",
+      "slides": [
+        44
+      ]
+    },
+    "action_4_desc": {
+      "sample": "A third property yields 2.6% and pushes real estate past 50%. Defer it.",
+      "slides": [
+        44
+      ]
+    },
+    "action_4_title": {
+      "sample": "Reconsider the home purchase",
+      "slides": [
+        44
+      ]
+    },
+    "action_5_desc": {
+      "sample": "Bring property from 40% of assets towards 30% over the next five years.",
+      "slides": [
+        44
+      ]
+    },
+    "action_5_title": {
+      "sample": "Build financial portfolio",
+      "slides": [
+        44
+      ]
+    },
+    "action_6_desc": {
+      "sample": "₹5 lakh prepaid with a 5% EMI step-up closes the loan in 2034, saving ₹11.2 lakh.",
+      "slides": [
+        44
+      ]
+    },
+    "action_6_title": {
+      "sample": "Home loan — prepay, don’t top up",
+      "slides": [
+        44
+      ]
+    },
+    "advisor_designation": {
+      "sample": "Designation",
+      "slides": [
+        49
+      ]
+    },
+    "advisor_email": {
+      "sample": "Work Email",
+      "slides": [
+        49
+      ]
+    },
+    "advisor_name": {
+      "sample": "Advisor Name",
+      "slides": [
+        49
+      ]
+    },
+    "alloc_1_label": {
+      "sample": "Real Estate",
+      "slides": [
+        5
+      ]
+    },
+    "alloc_1_pct": {
+      "sample": "40%",
+      "slides": [
+        5
+      ]
+    },
+    "alloc_1_value": {
+      "sample": "₹1.47 Cr",
+      "slides": [
+        5
+      ]
+    },
+    "alloc_2_label": {
+      "sample": "PPF",
+      "slides": [
+        5
+      ]
+    },
+    "alloc_2_pct": {
+      "sample": "6%",
+      "slides": [
+        5
+      ]
+    },
+    "alloc_2_value": {
+      "sample": "₹21.0 L",
+      "slides": [
+        5
+      ]
+    },
+    "alloc_3_label": {
+      "sample": "Mutual Funds",
+      "slides": [
+        5
+      ]
+    },
+    "alloc_3_pct": {
+      "sample": "19%",
+      "slides": [
+        5
+      ]
+    },
+    "alloc_3_value": {
+      "sample": "₹70.0 L",
+      "slides": [
+        5
+      ]
+    },
+    "alloc_4_label": {
+      "sample": "NPS",
+      "slides": [
+        5
+      ]
+    },
+    "alloc_4_pct": {
+      "sample": "5%",
+      "slides": [
+        5
+      ]
+    },
+    "alloc_4_value": {
+      "sample": "₹17.5 L",
+      "slides": [
+        5
+      ]
+    },
+    "alloc_5_label": {
+      "sample": "EPF",
+      "slides": [
+        5
+      ]
+    },
+    "alloc_5_pct": {
+      "sample": "12%",
+      "slides": [
+        5
+      ]
+    },
+    "alloc_5_value": {
+      "sample": "₹42.0 L",
+      "slides": [
+        5
+      ]
+    },
+    "alloc_6_label": {
+      "sample": "Direct Equity",
+      "slides": [
+        5
+      ]
+    },
+    "alloc_6_pct": {
+      "sample": "4%",
+      "slides": [
+        5
+      ]
+    },
+    "alloc_6_value": {
+      "sample": "₹14.0 L",
+      "slides": [
+        5
+      ]
+    },
+    "alloc_7_label": {
+      "sample": "Fixed Deposits",
+      "slides": [
+        5
+      ]
+    },
+    "alloc_7_pct": {
+      "sample": "8%",
+      "slides": [
+        5
+      ]
+    },
+    "alloc_7_value": {
+      "sample": "₹28.0 L",
+      "slides": [
+        5
+      ]
+    },
+    "alloc_8_label": {
+      "sample": "Sukanya Samriddhi",
+      "slides": [
+        5
+      ]
+    },
+    "alloc_8_pct": {
+      "sample": "4%",
+      "slides": [
+        5
+      ]
+    },
+    "alloc_8_value": {
+      "sample": "₹13.6 L",
+      "slides": [
+        5
+      ]
+    },
+    "alloc_9_label": {
+      "sample": "Gold & SGB",
+      "slides": [
+        5
+      ]
+    },
+    "alloc_9_pct": {
+      "sample": "2%",
+      "slides": [
+        5
+      ]
+    },
+    "alloc_9_value": {
+      "sample": "₹10.5 L",
+      "slides": [
+        5
+      ]
+    },
+    "allocation_comment": {
+      "sample": "Two-fifths of the balance sheet sits in property, which cannot be drawn on goal by goal. The plan therefore funds every goal from the remaining ₹2.17 crore of financial assets and shifts new savings towards that side of the sheet.",
+      "slides": [
+        5
+      ]
+    },
+    "annual_premium_total": {
+      "sample": "₹1.35 L",
+      "slides": [
+        15
+      ]
+    },
+    "annuity_comment": {
+      "sample": "A flat withdrawal plan fails by the mid-2050s. The corpus has to keep a growth allocation through retirement, which is what the core-and-satellite structure is for.",
+      "slides": [
+        42
+      ]
+    },
+    "annuity_required": {
+      "sample": "₹2.06 L",
+      "slides": [
+        41
+      ]
+    },
+    "asset_horizon_year": {
+      "sample": "2037",
+      "slides": [
+        35,
+        36,
+        37,
+        38
+      ]
+    },
+    "assumption_debt_return": {
+      "sample": "7%",
+      "slides": [
+        48
+      ]
+    },
+    "assumption_education_inflation": {
+      "sample": "10%",
+      "slides": [
+        48
+      ]
+    },
+    "assumption_equity_return": {
+      "sample": "12%",
+      "slides": [
+        48
+      ]
+    },
+    "assumption_post_retirement_return": {
+      "sample": "8%",
+      "slides": [
+        48
+      ]
+    },
+    "bucket_fixed_pct": {
+      "sample": "40%",
+      "slides": [
+        6
+      ]
+    },
+    "bucket_fixed_value": {
+      "sample": "₹1.47 Cr",
+      "slides": [
+        6
+      ]
+    },
+    "bucket_liquid_pct": {
+      "sample": "34%",
+      "slides": [
+        6
+      ]
+    },
+    "bucket_liquid_value": {
+      "sample": "₹1.23 Cr",
+      "slides": [
+        6
+      ]
+    },
+    "bucket_retirement_desc": {
+      "sample": "EPF, PPF, NPS and SSY are pure long-lock assets. At ten years from retirement, a 26% allocation here is healthy and needs no addition beyond the statutory flows.",
+      "slides": [
+        6
+      ]
+    },
+    "bucket_retirement_pct": {
+      "sample": "26%",
+      "slides": [
+        6
+      ]
+    },
+    "bucket_retirement_value": {
+      "sample": "₹94.1 L",
+      "slides": [
+        6
+      ]
+    },
+    "cashflow_comment": {
+      "sample": "A 49% savings rate is the single strongest number in this plan — it is what makes retirement at 55 discussable at all. The unallocated ₹21,700 is deliberately left free; it absorbs a bad month before any goal has to be paused.",
+      "slides": [
+        3
+      ]
+    },
+    "children_names_ages": {
+      "sample": "1. Aarav, 13       2. Isha, 8",
+      "slides": [
+        2
+      ]
+    },
+    "client_age": {
+      "sample": "45",
+      "slides": [
+        2
+      ]
+    },
+    "client_display_name": {
+      "sample": "Mr. & Mrs. Rohan Iyer",
+      "slides": [
+        1
+      ]
+    },
+    "client_dob": {
+      "sample": "12 March 1981",
+      "slides": [
+        2
+      ]
+    },
+    "client_name": {
+      "sample": "Mr. Rohan Iyer",
+      "slides": [
+        2
+      ]
+    },
+    "corpus_breakup_1_label": {
+      "sample": "Provident Fund",
+      "slides": [
+        42
+      ]
+    },
+    "corpus_breakup_1_value": {
+      "sample": "₹1.75 Cr",
+      "slides": [
+        42
+      ]
+    },
+    "corpus_breakup_2_label": {
+      "sample": "Mutual Funds",
+      "slides": [
+        42
+      ]
+    },
+    "corpus_breakup_2_value": {
+      "sample": "₹0.84 Cr",
+      "slides": [
+        42
+      ]
+    },
+    "corpus_breakup_3_label": {
+      "sample": "NPS — from age 60",
+      "slides": [
+        42
+      ]
+    },
+    "corpus_breakup_3_value": {
+      "sample": "₹0.76 Cr",
+      "slides": [
+        42
+      ]
+    },
+    "corpus_breakup_4_label": {
+      "sample": "Public Provident Fund",
+      "slides": [
+        42
+      ]
+    },
+    "corpus_breakup_4_value": {
+      "sample": "₹0.63 Cr",
+      "slides": [
+        42
+      ]
+    },
+    "corpus_breakup_5_label": {
+      "sample": "Second property",
+      "slides": [
+        42
+      ]
+    },
+    "corpus_breakup_5_value": {
+      "sample": "₹0.60 Cr",
+      "slides": [
+        42
+      ]
+    },
+    "corpus_breakup_6_label": {
+      "sample": "Direct Equity",
+      "slides": [
+        42
+      ]
+    },
+    "corpus_breakup_6_value": {
+      "sample": "₹0.44 Cr",
+      "slides": [
+        42
+      ]
+    },
+    "corpus_breakup_7_label": {
+      "sample": "Fixed Deposits & Bonds",
+      "slides": [
+        42
+      ]
+    },
+    "corpus_breakup_7_value": {
+      "sample": "₹0.35 Cr",
+      "slides": [
+        42
+      ]
+    },
+    "corpus_breakup_8_label": {
+      "sample": "Corporate FD",
+      "slides": [
+        42
+      ]
+    },
+    "corpus_breakup_8_value": {
+      "sample": "₹0.13 Cr",
+      "slides": [
+        42
+      ]
+    },
+    "corpus_later_1_label": {
+      "sample": "NPS — pays out from age 60",
+      "slides": [
+        40
+      ]
+    },
+    "corpus_later_1_value": {
+      "sample": "₹0.76 Cr",
+      "slides": [
+        40
+      ]
+    },
+    "corpus_later_2_label": {
+      "sample": "Other asset class — second property, if monetised",
+      "slides": [
+        40
+      ]
+    },
+    "corpus_later_2_value": {
+      "sample": "₹0.60 Cr",
+      "slides": [
+        40
+      ]
+    },
+    "corpus_liquid_total": {
+      "sample": "₹4.14 Cr",
+      "slides": [
+        40
+      ]
+    },
+    "corpus_now_1_label": {
+      "sample": "Provident Fund (PF)",
+      "slides": [
+        40
+      ]
+    },
+    "corpus_now_1_value": {
+      "sample": "₹1.75 Cr",
+      "slides": [
+        40
+      ]
+    },
+    "corpus_now_2_label": {
+      "sample": "Public Provident Fund (PPF)",
+      "slides": [
+        40
+      ]
+    },
+    "corpus_now_2_value": {
+      "sample": "₹0.63 Cr",
+      "slides": [
+        40
+      ]
+    },
+    "corpus_now_3_label": {
+      "sample": "Retirement savings — MF",
+      "slides": [
+        40
+      ]
+    },
+    "corpus_now_3_value": {
+      "sample": "₹0.70 Cr",
+      "slides": [
+        40
+      ]
+    },
+    "corpus_now_4_label": {
+      "sample": "Financial assets — MF, direct equity",
+      "slides": [
+        40
+      ]
+    },
+    "corpus_now_4_value": {
+      "sample": "₹0.44 Cr",
+      "slides": [
+        40
+      ]
+    },
+    "corpus_now_5_label": {
+      "sample": "Fixed assets — FD, MLD, bonds",
+      "slides": [
+        40
+      ]
+    },
+    "corpus_now_5_value": {
+      "sample": "₹0.35 Cr",
+      "slides": [
+        40
+      ]
+    },
+    "corpus_now_6_label": {
+      "sample": "Education reallocation",
+      "slides": [
+        40
+      ]
+    },
+    "corpus_now_6_value": {
+      "sample": "₹0.14 Cr",
+      "slides": [
+        40
+      ]
+    },
+    "corpus_now_7_label": {
+      "sample": "Other assets — corporate FD",
+      "slides": [
+        40
+      ]
+    },
+    "corpus_now_7_value": {
+      "sample": "₹0.13 Cr",
+      "slides": [
+        40
+      ]
+    },
+    "corpus_projected": {
+      "sample": "₹5.50 Cr",
+      "slides": [
+        34,
+        40,
+        41
+      ]
+    },
+    "corpus_required": {
+      "sample": "₹6.25 Cr",
+      "slides": [
+        34,
+        41
+      ]
+    },
+    "cover_ci_status": {
+      "sample": "Gap. A ₹25 L rider pays a lump sum on diagnosis.",
+      "slides": [
+        17
+      ]
+    },
+    "cover_classification_comment": {
+      "sample": "Mixing cover with investment is what makes protection expensive. Keeping the three jobs separate — term for income, floater and top-up for health, riders for illness — buys far more cover for the same ₹1.35 lakh a year.",
+      "slides": [
+        17
+      ]
+    },
+    "cover_debt_note": {
+      "sample": "Home and car loans come off the top before anything is left.",
+      "slides": [
+        18
+      ]
+    },
+    "cover_endowment_status": {
+      "sample": "₹9.6 L maturing 2032, returning about 4.6% a year.",
+      "slides": [
+        17
+      ]
+    },
+    "cover_floater_status": {
+      "sample": "₹10 L shared across all four members, in force.",
+      "slides": [
+        17
+      ]
+    },
+    "cover_gap": {
+      "sample": "₹3.15 Cr",
+      "slides": [
+        18
+      ]
+    },
+    "cover_gap_comment": {
+      "sample": "Cover is sized to what the family would have to replace, not to what feels affordable. Ten times income clears the loans, funds both children's education and leaves Aditi an income for the years the salary would have covered.",
+      "slides": [
+        18
+      ]
+    },
+    "cover_gap_headline": {
+      "sample": "Life cover stands at 4.2 times income, against the ten times this family needs",
+      "slides": [
+        18
+      ]
+    },
+    "cover_gap_note": {
+      "sample": "Enough to fund the family for roughly seventeen years.",
+      "slides": [
+        18
+      ]
+    },
+    "cover_pa_status": {
+      "sample": "₹50 L on accidental death or disability, in force.",
+      "slides": [
+        17
+      ]
+    },
+    "cover_rec_1_cover": {
+      "sample": "₹5.40 Cr",
+      "slides": [
+        19
+      ]
+    },
+    "cover_rec_1_label": {
+      "sample": "Term cover",
+      "slides": [
+        19
+      ]
+    },
+    "cover_rec_1_premium": {
+      "sample": "₹81,000",
+      "slides": [
+        19
+      ]
+    },
+    "cover_rec_2_cover": {
+      "sample": "₹35 L",
+      "slides": [
+        19
+      ]
+    },
+    "cover_rec_2_label": {
+      "sample": "Health floater + top-up",
+      "slides": [
+        19
+      ]
+    },
+    "cover_rec_2_premium": {
+      "sample": "₹47,500",
+      "slides": [
+        19
+      ]
+    },
+    "cover_rec_3_cover": {
+      "sample": "held to maturity, not renewed",
+      "slides": [
+        19
+      ]
+    },
+    "cover_rec_3_label": {
+      "sample": "Endowment",
+      "slides": [
+        19
+      ]
+    },
+    "cover_rec_3_premium": {
+      "sample": "₹0",
+      "slides": [
+        19
+      ]
+    },
+    "cover_rec_4_cover": {
+      "sample": "₹50 L",
+      "slides": [
+        19
+      ]
+    },
+    "cover_rec_4_label": {
+      "sample": "Personal accident",
+      "slides": [
+        19
+      ]
+    },
+    "cover_rec_4_premium": {
+      "sample": "₹6,400",
+      "slides": [
+        19
+      ]
+    },
+    "cover_rec_summary": {
+      "sample": "₹1.35 L a year buys 10× income",
+      "slides": [
+        19
+      ]
+    },
+    "cover_rec_total": {
+      "sample": "₹1.35 L a year",
+      "slides": [
+        19
+      ]
+    },
+    "cover_recommended": {
+      "sample": "₹5 Cr",
+      "slides": [
+        15
+      ]
+    },
+    "cover_suggestion_comment": {
+      "sample": "The endowment stays until it matures in 2032, so nothing already paid is lost. Its ₹51,000 renewal is simply not repeated: ₹42,000 of it buys the additional term cover and ₹9,000 buys the health top-up.",
+      "slides": [
+        19
+      ]
+    },
+    "cover_suggestion_headline": {
+      "sample": "The same ₹1.35 lakh premium can buy 2.4 times the cover it buys today",
+      "slides": [
+        19
+      ]
+    },
+    "cover_term_status": {
+      "sample": "₹1.5 Cr on Rohan and ₹75 L on Aditi, both in force.",
+      "slides": [
+        17
+      ]
+    },
+    "cover_today_1_cover": {
+      "sample": "₹2.25 Cr",
+      "slides": [
+        19
+      ]
+    },
+    "cover_today_1_label": {
+      "sample": "Term cover",
+      "slides": [
+        19
+      ]
+    },
+    "cover_today_1_premium": {
+      "sample": "₹39,000",
+      "slides": [
+        19
+      ]
+    },
+    "cover_today_2_cover": {
+      "sample": "₹10 L",
+      "slides": [
+        19
+      ]
+    },
+    "cover_today_2_label": {
+      "sample": "Health floater",
+      "slides": [
+        19
+      ]
+    },
+    "cover_today_2_premium": {
+      "sample": "₹38,500",
+      "slides": [
+        19
+      ]
+    },
+    "cover_today_3_cover": {
+      "sample": "₹9.6 L at 2032",
+      "slides": [
+        19
+      ]
+    },
+    "cover_today_3_label": {
+      "sample": "Endowment",
+      "slides": [
+        19
+      ]
+    },
+    "cover_today_3_premium": {
+      "sample": "₹51,000",
+      "slides": [
+        19
+      ]
+    },
+    "cover_today_4_cover": {
+      "sample": "₹50 L",
+      "slides": [
+        19
+      ]
+    },
+    "cover_today_4_label": {
+      "sample": "Personal accident",
+      "slides": [
+        19
+      ]
+    },
+    "cover_today_4_premium": {
+      "sample": "₹6,400",
+      "slides": [
+        19
+      ]
+    },
+    "cover_today_summary": {
+      "sample": "₹1.35 L a year buys 4.2× income",
+      "slides": [
+        19
+      ]
+    },
+    "cover_today_total": {
+      "sample": "₹1.35 L a year",
+      "slides": [
+        19
+      ]
+    },
+    "cover_topup_status": {
+      "sample": "Gap. ₹25 L above the ₹10 L limit costs about ₹9,000 a year.",
+      "slides": [
+        17
+      ]
+    },
+    "cover_ulip_status": {
+      "sample": "Not held; charges dilute cover and returns alike.",
+      "slides": [
+        17
+      ]
+    },
+    "cover_waiver_status": {
+      "sample": "Add at renewal. Keeps every policy alive if income stops.",
+      "slides": [
+        17
+      ]
+    },
+    "deposit_book_note": {
+      "sample": "Held in fixed deposits earning about 5.3% after tax — nineteen months of household expenses, where twelve is the agreed reserve.",
+      "slides": [
+        21
+      ]
+    },
+    "deposit_prepay_amount": {
+      "sample": "₹5.0 L",
+      "slides": [
+        21
+      ]
+    },
+    "deposit_prepay_note": {
+      "sample": "Earns 8.4% risk-free by cancelling interest; saves ₹11.2 L.",
+      "slides": [
+        21
+      ]
+    },
+    "deposit_reserve_amount": {
+      "sample": "₹18.0 L",
+      "slides": [
+        21
+      ]
+    },
+    "deposit_reserve_note": {
+      "sample": "Twelve months of expenses at ₹1.5 L a month, untouched.",
+      "slides": [
+        21
+      ]
+    },
+    "deposit_retirement_amount": {
+      "sample": "₹5.0 L",
+      "slides": [
+        21
+      ]
+    },
+    "deposit_retirement_note": {
+      "sample": "Grows at an expected 10-11% instead of 5.3% after tax.",
+      "slides": [
+        21
+      ]
+    },
+    "emergency_reserve": {
+      "sample": "12 months",
+      "slides": [
+        7
+      ]
+    },
+    "emi_crossover_note": {
+      "sample": "Principal overtakes interest only six years from now.",
+      "slides": [
+        24
+      ]
+    },
+    "emi_crossover_year": {
+      "sample": "2032",
+      "slides": [
+        24
+      ]
+    },
+    "emi_crossover_year_prepaid": {
+      "sample": "2029",
+      "slides": [
+        24
+      ]
+    },
+    "emi_interest_note": {
+      "sample": "Every month of delay costs ₹26,600 in interest alone.",
+      "slides": [
+        24
+      ]
+    },
+    "emi_interest_share": {
+      "sample": "63%",
+      "slides": [
+        24
+      ]
+    },
+    "emi_note": {
+      "sample": "home and car",
+      "slides": [
+        3
+      ]
+    },
+    "emi_prepay_note": {
+      "sample": "Prepayment attacks principal directly, so the crossover arrives three years sooner.",
+      "slides": [
+        24
+      ]
+    },
+    "emi_split_comment": {
+      "sample": "An EMI is not a fixed cost split evenly over the years. In the early years it is mostly rent on the borrowed money, which is why a prepayment made now is worth several times the same amount paid in 2034.",
+      "slides": [
+        24
+      ]
+    },
+    "emi_split_headline": {
+      "sample": "₹26,600 of today's ₹42,500 EMI is interest — only ₹15,900 reduces the loan",
+      "slides": [
+        24
+      ]
+    },
+    "emis_pct": {
+      "sample": "13%",
+      "slides": [
+        3,
+        7
+      ]
+    },
+    "equity_base_year": {
+      "sample": "2026",
+      "slides": [
+        37
+      ]
+    },
+    "equity_comment": {
+      "sample": "Individual stock selection needs continuous research, and a single-stock failure this close to retirement is difficult to recover from. Staging the exit over four years keeps the capital gains tax bill near zero.",
+      "slides": [
+        37
+      ]
+    },
+    "equity_current_value": {
+      "sample": "₹62 L",
+      "slides": [
+        37
+      ]
+    },
+    "equity_current_value_caps": {
+      "sample": "₹62 LAKH",
+      "slides": [
+        37
+      ]
+    },
+    "equity_description": {
+      "sample": "Eleven holdings built up over fifteen years. Four of them account for 58% of the book, and two sectors account for two- thirds of it.",
+      "slides": [
+        37
+      ]
+    },
+    "equity_earmarked_label": {
+      "sample": "Earmarked for Aarav’s PG in",
+      "slides": [
+        37
+      ]
+    },
+    "equity_earmarked_value": {
+      "sample": "₹20 L",
+      "slides": [
+        37
+      ]
+    },
+    "equity_earmarked_year": {
+      "sample": "2036",
+      "slides": [
+        37
+      ]
+    },
+    "equity_growth_value": {
+      "sample": "₹92 L",
+      "slides": [
+        37
+      ]
+    },
+    "equity_holdings_count": {
+      "sample": "11",
+      "slides": [
+        37
+      ]
+    },
+    "equity_recommendation": {
+      "sample": "Move the seven smallest holdings into diversified funds over four financial years, using the ₹1.25 lakh annual exemption. Keep the four convictions you actively follow.",
+      "slides": [
+        37
+      ]
+    },
+    "equity_retained_note": {
+      "sample": "Consolidated into three funds",
+      "slides": [
+        37
+      ]
+    },
+    "equity_retained_value": {
+      "sample": "₹42 L",
+      "slides": [
+        37
+      ]
+    },
+    "equity_roi": {
+      "sample": "11%",
+      "slides": [
+        37
+      ]
+    },
+    "equity_top_weight": {
+      "sample": "58%",
+      "slides": [
+        37
+      ]
+    },
+    "equity_value_at_retirement": {
+      "sample": "₹1.34 Cr",
+      "slides": [
+        37
+      ]
+    },
+    "equity_value_at_retirement_long": {
+      "sample": "₹1.34 Crore",
+      "slides": [
+        37
+      ]
+    },
+    "expenses_pct": {
+      "sample": "33%",
+      "slides": [
+        3
+      ]
+    },
+    "fd_1_amount": {
+      "sample": "₹8,00,000",
+      "slides": [
+        20
+      ]
+    },
+    "fd_1_issuer": {
+      "sample": "Public sector bank",
+      "slides": [
+        20
+      ]
+    },
+    "fd_1_maturity": {
+      "sample": "Mar 2027",
+      "slides": [
+        20
+      ]
+    },
+    "fd_1_rate": {
+      "sample": "7.10%",
+      "slides": [
+        20
+      ]
+    },
+    "fd_1_remarks": {
+      "sample": "Retain — core emergency reserve",
+      "slides": [
+        20
+      ]
+    },
+    "fd_2_amount": {
+      "sample": "₹4,00,000",
+      "slides": [
+        20
+      ]
+    },
+    "fd_2_issuer": {
+      "sample": "Private bank",
+      "slides": [
+        20
+      ]
+    },
+    "fd_2_maturity": {
+      "sample": "Sep 2027",
+      "slides": [
+        20
+      ]
+    },
+    "fd_2_rate": {
+      "sample": "7.40%",
+      "slides": [
+        20
+      ]
+    },
+    "fd_2_remarks": {
+      "sample": "Reallocate on maturity to the retirement portfolio",
+      "slides": [
+        20
+      ]
+    },
+    "fd_3_amount": {
+      "sample": "₹5,00,000",
+      "slides": [
+        20
+      ]
+    },
+    "fd_3_issuer": {
+      "sample": "Small finance bank",
+      "slides": [
+        20
+      ]
+    },
+    "fd_3_maturity": {
+      "sample": "Jan 2028",
+      "slides": [
+        20
+      ]
+    },
+    "fd_3_rate": {
+      "sample": "7.90%",
+      "slides": [
+        20
+      ]
+    },
+    "fd_3_remarks": {
+      "sample": "Retain — part of the emergency reserve",
+      "slides": [
+        20
+      ]
+    },
+    "fd_4_amount": {
+      "sample": "₹6,00,000",
+      "slides": [
+        20
+      ]
+    },
+    "fd_4_issuer": {
+      "sample": "Corporate deposit",
+      "slides": [
+        20
+      ]
+    },
+    "fd_4_maturity": {
+      "sample": "Jul 2028",
+      "slides": [
+        20
+      ]
+    },
+    "fd_4_rate": {
+      "sample": "8.20%",
+      "slides": [
+        20
+      ]
+    },
+    "fd_4_remarks": {
+      "sample": "AAA rated; carried into the retirement bucket",
+      "slides": [
+        20
+      ]
+    },
+    "fd_5_amount": {
+      "sample": "₹5,00,000",
+      "slides": [
+        20
+      ]
+    },
+    "fd_5_issuer": {
+      "sample": "Post office term deposit",
+      "slides": [
+        20
+      ]
+    },
+    "fd_5_maturity": {
+      "sample": "Nov 2029",
+      "slides": [
+        20
+      ]
+    },
+    "fd_5_rate": {
+      "sample": "7.50%",
+      "slides": [
+        20
+      ]
+    },
+    "fd_5_remarks": {
+      "sample": "Retain — part of the emergency reserve",
+      "slides": [
+        20
+      ]
+    },
+    "fd_avg_rate": {
+      "sample": "7.59%",
+      "slides": [
+        20
+      ]
+    },
+    "fd_comment": {
+      "sample": "At ₹1.5 lakh of monthly expenses, ₹28 lakh is about nineteen months of cover; twelve is comfortable. After tax these deposits earn about 5.3% against 6% inflation, so roughly ₹10 lakh should move out of deposits and into the retirement portfolio as a lumpsum.",
+      "slides": [
+        20
+      ]
+    },
+    "fd_total": {
+      "sample": "₹28,00,000",
+      "slides": [
+        20
+      ]
+    },
+    "fd_total_short": {
+      "sample": "₹28.0 L",
+      "slides": [
+        21
+      ]
+    },
+    "first_goal_year": {
+      "sample": "2028",
+      "slides": [
+        26
+      ]
+    },
+    "freed_1_amount": {
+      "sample": "₹15,800",
+      "slides": [
+        14
+      ]
+    },
+    "freed_1_event": {
+      "sample": "Car loan closes",
+      "slides": [
+        14
+      ]
+    },
+    "freed_1_year": {
+      "sample": "2029",
+      "slides": [
+        14
+      ]
+    },
+    "freed_2_amount": {
+      "sample": "₹20,000",
+      "slides": [
+        14
+      ]
+    },
+    "freed_2_event": {
+      "sample": "Renovation funded",
+      "slides": [
+        14
+      ]
+    },
+    "freed_2_year": {
+      "sample": "2031",
+      "slides": [
+        14
+      ]
+    },
+    "freed_3_amount": {
+      "sample": "₹42,500",
+      "slides": [
+        14
+      ]
+    },
+    "freed_3_event": {
+      "sample": "Home loan closes",
+      "slides": [
+        14
+      ]
+    },
+    "freed_3_year": {
+      "sample": "2034",
+      "slides": [
+        14
+      ]
+    },
+    "freed_4_amount": {
+      "sample": "₹77,000",
+      "slides": [
+        14
+      ]
+    },
+    "freed_4_event": {
+      "sample": "Education funded",
+      "slides": [
+        14
+      ]
+    },
+    "freed_4_year": {
+      "sample": "2035",
+      "slides": [
+        14
+      ]
+    },
+    "freed_cashflow_comment": {
+      "sample": "Each instalment is re-tagged the month it is freed rather than absorbed into spending. This is what lifts the retirement contribution six-fold in the last two years before 2036, and it is the cheapest ₹0.75 crore available to the plan.",
+      "slides": [
+        14
+      ]
+    },
+    "goal4_comment": {
+      "sample": "Move this corpus out of equity in stages from 2032 — a third a year — so that a poor market in 2034 cannot delay the build. The ₹26 lakh surplus is deliberate: construction overruns are the norm, not the exception.",
+      "slides": [
+        29
+      ]
+    },
+    "goal4_corpus": {
+      "sample": "₹1.61 Cr",
+      "slides": [
+        29
+      ]
+    },
+    "goal4_cost_label": {
+      "sample": "Build cost today",
+      "slides": [
+        29
+      ]
+    },
+    "goal4_cost_today": {
+      "sample": "₹85.0 L",
+      "slides": [
+        29
+      ]
+    },
+    "goal4_future_cost": {
+      "sample": "₹1.35 Crore",
+      "slides": [
+        29
+      ]
+    },
+    "goal4_inflation": {
+      "sample": "6%",
+      "slides": [
+        29
+      ]
+    },
+    "goal4_inflation_label": {
+      "sample": "Construction inflation",
+      "slides": [
+        29
+      ]
+    },
+    "goal4_intro": {
+      "sample": "Built without a construction loan. The home loan closes in 2033 precisely so that no new debt is taken on a year later.",
+      "slides": [
+        29
+      ]
+    },
+    "goal4_margin": {
+      "sample": "₹26 L clear — the contingency on a build",
+      "slides": [
+        29
+      ]
+    },
+    "goal4_name": {
+      "sample": "Home Construction",
+      "slides": [
+        29
+      ]
+    },
+    "goal4_redirect_label": {
+      "sample": "From April 2034 the combined ₹93,000 redirects to",
+      "slides": [
+        29
+      ]
+    },
+    "goal4_redirect_to": {
+      "sample": "Retirement corpus",
+      "slides": [
+        29
+      ]
+    },
+    "goal4_src1_label": {
+      "sample": "SIP ₹30,000 a month",
+      "slides": [
+        29
+      ]
+    },
+    "goal4_src1_terms": {
+      "sample": "Equity MF · 12% · 2026–2034",
+      "slides": [
+        29
+      ]
+    },
+    "goal4_src1_value": {
+      "sample": "₹48.5 L",
+      "slides": [
+        29
+      ]
+    },
+    "goal4_src2_label": {
+      "sample": "Vacation and car SIPs redirected",
+      "slides": [
+        29
+      ]
+    },
+    "goal4_src2_terms": {
+      "sample": "₹38,000 a month from 2028 and 2029",
+      "slides": [
+        29
+      ]
+    },
+    "goal4_src2_value": {
+      "sample": "₹36.0 L",
+      "slides": [
+        29
+      ]
+    },
+    "goal4_src3_label": {
+      "sample": "Plot SIP redirected",
+      "slides": [
+        29
+      ]
+    },
+    "goal4_src3_terms": {
+      "sample": "₹25,000 a month from 2030",
+      "slides": [
+        29
+      ]
+    },
+    "goal4_src3_value": {
+      "sample": "₹15.3 L",
+      "slides": [
+        29
+      ]
+    },
+    "goal4_src4_label": {
+      "sample": "Lumpsum ₹25 L from mutual funds",
+      "slides": [
+        29
+      ]
+    },
+    "goal4_src4_terms": {
+      "sample": "Existing holding · 12% to 2034",
+      "slides": [
+        29
+      ]
+    },
+    "goal4_src4_value": {
+      "sample": "₹62.0 L",
+      "slides": [
+        29
+      ]
+    },
+    "goal4_year": {
+      "sample": "2034",
+      "slides": [
+        29
+      ]
+    },
+    "goal4_years_left": {
+      "sample": "8",
+      "slides": [
+        29
+      ]
+    },
+    "goal_comment": {
+      "sample": "Book the trip out of this corpus and nothing else. Funding a discretionary goal from the education or retirement pots is how a well-built plan quietly drifts.",
+      "slides": [
+        27
+      ]
+    },
+    "goal_corpus": {
+      "sample": "₹10.3 L",
+      "slides": [
+        27
+      ]
+    },
+    "goal_cost_label": {
+      "sample": "Cost today",
+      "slides": [
+        27
+      ]
+    },
+    "goal_cost_today": {
+      "sample": "₹9.00 L",
+      "slides": [
+        27
+      ]
+    },
+    "goal_future_cost": {
+      "sample": "₹10.1 Lakh",
+      "slides": [
+        27
+      ]
+    },
+    "goal_inflation": {
+      "sample": "6%",
+      "slides": [
+        27
+      ]
+    },
+    "goal_inflation_label": {
+      "sample": "Inflation assumed",
+      "slides": [
+        27
+      ]
+    },
+    "goal_intro": {
+      "sample": "Held in arbitrage and short-duration debt funds. At a two-year horizon the priority is that the money is intact in 2028, not that it grows.",
+      "slides": [
+        27
+      ]
+    },
+    "goal_margin": {
+      "sample": "₹19,000 clear of the target",
+      "slides": [
+        27
+      ]
+    },
+    "goal_name": {
+      "sample": "International Family Vacation",
+      "slides": [
+        27
+      ]
+    },
+    "goal_redirect_label": {
+      "sample": "From April 2028 the ₹20,000 SIP redirects to",
+      "slides": [
+        27
+      ]
+    },
+    "goal_redirect_to": {
+      "sample": "Home construction 2034",
+      "slides": [
+        27
+      ]
+    },
+    "goal_src1_label": {
+      "sample": "SIP ₹20,000 a month",
+      "slides": [
+        27
+      ]
+    },
+    "goal_src1_terms": {
+      "sample": "Arbitrage funds · 7% assumed · Sept 2026 – Mar 2028",
+      "slides": [
+        27
+      ]
+    },
+    "goal_src1_value": {
+      "sample": "₹4.00 L",
+      "slides": [
+        27
+      ]
+    },
+    "goal_src2_label": {
+      "sample": "Existing deposit, re-tagged",
+      "slides": [
+        27
+      ]
+    },
+    "goal_src2_terms": {
+      "sample": "₹5.50 L from the FD book · 7% · matures 2028",
+      "slides": [
+        27
+      ]
+    },
+    "goal_src2_value": {
+      "sample": "₹6.30 L",
+      "slides": [
+        27
+      ]
+    },
+    "goal_year": {
+      "sample": "2028",
+      "slides": [
+        27
+      ]
+    },
+    "goal_years_left": {
+      "sample": "2",
+      "slides": [
+        27
+      ]
+    },
+    "goals_funding_intro": {
+      "sample": "Eight goals, in the order the money is needed. Each slide states the target in the year it falls due, and the exact sources that meet it.",
+      "slides": [
+        26
+      ]
+    },
+    "goals_section_intro": {
+      "sample": "Eight goals over eighteen years, mapped against the ₹3 lakh a month you already invest — and against every instalment that comes free along the way.",
+      "slides": [
+        10
+      ]
+    },
+    "gross_monthly_income": {
+      "sample": "₹4,50,000",
+      "slides": [
+        3
+      ]
+    },
+    "gross_monthly_income_short": {
+      "sample": "₹4.50 L",
+      "slides": [
+        7
+      ]
+    },
+    "health_summary": {
+      "sample": "Your current financial health is stable, with a score of 78%. The portfolio is adequately diversified, inflows are strong and every near-term goal is already funded. The score is held back by two things: 40% of the balance sheet is in property, and the plan currently depends on a single income.",
+      "slides": [
+        7
+      ]
+    },
+    "home_loan_section_intro": {
+      "sample": "Seven years in, ₹36 lakh has left your account, and ₹38 lakh is still outstanding. This section shows why — and what a single ₹5 lakh decision changes.",
+      "slides": [
+        22
+      ]
+    },
+    "ia_1_allocated": {
+      "sample": "₹52.0 L",
+      "slides": [
+        12
+      ]
+    },
+    "ia_1_asset": {
+      "sample": "Mutual Funds — Equity",
+      "slides": [
+        12
+      ]
+    },
+    "ia_1_current": {
+      "sample": "₹52.0 L",
+      "slides": [
+        12
+      ]
+    },
+    "ia_1_goals": {
+      "sample": "Education — UG 2031, PG 2035",
+      "slides": [
+        12
+      ]
+    },
+    "ia_1_monthly": {
+      "sample": "₹77,000",
+      "slides": [
+        12
+      ]
+    },
+    "ia_2_allocated": {
+      "sample": "₹18.0 L",
+      "slides": [
+        12
+      ]
+    },
+    "ia_2_asset": {
+      "sample": "Mutual Funds — Hybrid",
+      "slides": [
+        12
+      ]
+    },
+    "ia_2_current": {
+      "sample": "₹18.0 L",
+      "slides": [
+        12
+      ]
+    },
+    "ia_2_goals": {
+      "sample": "Vacation 2029 · Renovation 2031",
+      "slides": [
+        12
+      ]
+    },
+    "ia_2_monthly": {
+      "sample": "₹35,000",
+      "slides": [
+        12
+      ]
+    },
+    "ia_3_allocated": {
+      "sample": "—",
+      "slides": [
+        12
+      ]
+    },
+    "ia_3_asset": {
+      "sample": "Mutual Funds — Retirement",
+      "slides": [
+        12
+      ]
+    },
+    "ia_3_current": {
+      "sample": "—",
+      "slides": [
+        12
+      ]
+    },
+    "ia_3_goals": {
+      "sample": "Retirement 2036 — new SIP",
+      "slides": [
+        12
+      ]
+    },
+    "ia_3_monthly": {
+      "sample": "₹30,000",
+      "slides": [
+        12
+      ]
+    },
+    "ia_4_allocated": {
+      "sample": "₹14.0 L",
+      "slides": [
+        12
+      ]
+    },
+    "ia_4_asset": {
+      "sample": "Direct Equity",
+      "slides": [
+        12
+      ]
+    },
+    "ia_4_current": {
+      "sample": "₹14.0 L",
+      "slides": [
+        12
+      ]
+    },
+    "ia_4_goals": {
+      "sample": "Retirement 2036",
+      "slides": [
+        12
+      ]
+    },
+    "ia_4_monthly": {
+      "sample": "—",
+      "slides": [
+        12
+      ]
+    },
+    "ia_5_allocated": {
+      "sample": "₹18.0 L",
+      "slides": [
+        12
+      ]
+    },
+    "ia_5_asset": {
+      "sample": "Fixed Deposits",
+      "slides": [
+        12
+      ]
+    },
+    "ia_5_current": {
+      "sample": "₹28.0 L",
+      "slides": [
+        12
+      ]
+    },
+    "ia_5_goals": {
+      "sample": "Emergency reserve · ₹10 L to reallocate",
+      "slides": [
+        12
+      ]
+    },
+    "ia_5_monthly": {
+      "sample": "—",
+      "slides": [
+        12
+      ]
+    },
+    "ia_6_allocated": {
+      "sample": "₹10.5 L",
+      "slides": [
+        12
+      ]
+    },
+    "ia_6_asset": {
+      "sample": "Gold & SGB",
+      "slides": [
+        12
+      ]
+    },
+    "ia_6_current": {
+      "sample": "₹10.5 L",
+      "slides": [
+        12
+      ]
+    },
+    "ia_6_goals": {
+      "sample": "Marriage 2044",
+      "slides": [
+        12
+      ]
+    },
+    "ia_6_monthly": {
+      "sample": "₹6,000",
+      "slides": [
+        12
+      ]
+    },
+    "ia_7_allocated": {
+      "sample": "₹13.6 L",
+      "slides": [
+        12
+      ]
+    },
+    "ia_7_asset": {
+      "sample": "Sukanya Samriddhi",
+      "slides": [
+        12
+      ]
+    },
+    "ia_7_current": {
+      "sample": "₹13.6 L",
+      "slides": [
+        12
+      ]
+    },
+    "ia_7_goals": {
+      "sample": "Isha — education 2036, marriage 2044",
+      "slides": [
+        12
+      ]
+    },
+    "ia_7_monthly": {
+      "sample": "₹12,500",
+      "slides": [
+        12
+      ]
+    },
+    "ia_8_allocated": {
+      "sample": "₹80.5 L",
+      "slides": [
+        12
+      ]
+    },
+    "ia_8_asset": {
+      "sample": "EPF · PPF · NPS",
+      "slides": [
+        12
+      ]
+    },
+    "ia_8_current": {
+      "sample": "₹80.5 L",
+      "slides": [
+        12
+      ]
+    },
+    "ia_8_goals": {
+      "sample": "Retirement 2036 · NPS from 2041",
+      "slides": [
+        12
+      ]
+    },
+    "ia_8_monthly": {
+      "sample": "₹59,500",
+      "slides": [
+        12
+      ]
+    },
+    "ia_total_allocated": {
+      "sample": "₹2.07 Cr",
+      "slides": [
+        12
+      ]
+    },
+    "ia_total_current": {
+      "sample": "₹2.17 Cr",
+      "slides": [
+        12
+      ]
+    },
+    "ia_total_monthly": {
+      "sample": "₹2,20,000",
+      "slides": [
+        12
+      ]
+    },
+    "inflation_rate": {
+      "sample": "6%",
+      "slides": [
+        41,
+        42,
+        48
+      ]
+    },
+    "investment_allocation_comment": {
+      "sample": "Of the ₹2.20 lakh committed each month, the ₹30,000 tagged to retirement is funded by the FD reallocation rather than by fresh saving. Property is excluded here because it cannot be drawn on goal by goal.",
+      "slides": [
+        12
+      ]
+    },
+    "ladder_comment": {
+      "sample": "Nothing here asks the family to spend less. Each step is money already leaving the account as an EMI or a goal contribution; the discipline is simply to redirect it on the day it is freed rather than let it be absorbed.",
+      "slides": [
+        39
+      ]
+    },
+    "ladder_headline": {
+      "sample": "Every instalment that ends is re-tagged, lifting the retirement SIP six-fold by 2035",
+      "slides": [
+        39
+      ]
+    },
+    "last_goal_year": {
+      "sample": "2044",
+      "slides": [
+        26
+      ]
+    },
+    "legacy_comment": {
+      "sample": "The surplus above the corpus requirement is what makes legacy planning relevant here rather than theoretical. None of these four items costs more than a day, and all four fail expensively if left undone.",
+      "slides": [
+        43
+      ]
+    },
+    "legacy_nominations_note": {
+      "sample": "Refresh nominees on EPF, PPF, NPS, all folios and both term policies; three still name a parent.",
+      "slides": [
+        43
+      ]
+    },
+    "legacy_nps_note": {
+      "sample": "₹1.35 crore matures in 2041. Deferred annuity for the second half of retirement or left as legacy.",
+      "slides": [
+        43
+      ]
+    },
+    "legacy_records_note": {
+      "sample": "One consolidated statement of holdings, policies and access, shared with your spouse and reviewed yearly.",
+      "slides": [
+        43
+      ]
+    },
+    "legacy_will_note": {
+      "sample": "Not yet drawn. With two properties and two minor children, a registered will is the priority action.",
+      "slides": [
+        43
+      ]
+    },
+    "life_cover_current": {
+      "sample": "₹1.5 Cr",
+      "slides": [
+        15
+      ]
+    },
+    "life_expectancy": {
+      "sample": "90",
+      "slides": [
+        48
+      ]
+    },
+    "loan_1_closing_year": {
+      "sample": "2039",
+      "slides": [
+        8,
+        23
+      ]
+    },
+    "loan_1_comment": {
+      "sample": "At 8.4% the loan costs more than the post-tax return on your deposits, so prepaying from the FD surplus is the better use of that money. Closing in 2034 also frees the EMI before retirement.",
+      "slides": [
+        8
+      ]
+    },
+    "loan_1_emi": {
+      "sample": "₹42,500",
+      "slides": [
+        8,
+        23,
+        25
+      ]
+    },
+    "loan_1_emi_freed_note": {
+      "sample": "EMI freed five years early",
+      "slides": [
+        23
+      ]
+    },
+    "loan_1_emi_topup": {
+      "sample": "5% a year",
+      "slides": [
+        8
+      ]
+    },
+    "loan_1_interest_after_prepay": {
+      "sample": "₹16.2 L",
+      "slides": [
+        23
+      ]
+    },
+    "loan_1_interest_outstanding": {
+      "sample": "₹27,40,000",
+      "slides": [
+        8
+      ]
+    },
+    "loan_1_interest_saved": {
+      "sample": "₹11,20,000",
+      "slides": [
+        8
+      ]
+    },
+    "loan_1_interest_saved_short": {
+      "sample": "₹11.2 L",
+      "slides": [
+        22,
+        23,
+        25
+      ]
+    },
+    "loan_1_name": {
+      "sample": "Home Loan",
+      "slides": [
+        8
+      ]
+    },
+    "loan_1_new_closing_year": {
+      "sample": "2034",
+      "slides": [
+        8,
+        23,
+        25
+      ]
+    },
+    "loan_1_outstanding": {
+      "sample": "₹38,00,000",
+      "slides": [
+        8
+      ]
+    },
+    "loan_1_paid_period": {
+      "sample": "paid over seven years",
+      "slides": [
+        23
+      ]
+    },
+    "loan_1_paid_to_date": {
+      "sample": "₹35.7 L",
+      "slides": [
+        23
+      ]
+    },
+    "loan_1_prepay_amount": {
+      "sample": "₹5,00,000",
+      "slides": [
+        8
+      ]
+    },
+    "loan_1_prepay_short": {
+      "sample": "₹5 L",
+      "slides": [
+        24
+      ]
+    },
+    "loan_1_rate": {
+      "sample": "8.40%",
+      "slides": [
+        8
+      ]
+    },
+    "loan_1_start_year": {
+      "sample": "2019",
+      "slides": [
+        23
+      ]
+    },
+    "loan_1_years_saved": {
+      "sample": "5 years",
+      "slides": [
+        8,
+        22,
+        23,
+        25
+      ]
+    },
+    "loan_2_closing_year": {
+      "sample": "2030",
+      "slides": [
+        9
+      ]
+    },
+    "loan_2_comment": {
+      "sample": "The car loan is the costliest debt on the sheet but the smallest. Clearing it from the monthly surplus rather than from the deposit book keeps the emergency reserve intact, and the freed EMI of ₹15,800 becomes part of the retirement SIP from 2029.",
+      "slides": [
+        9
+      ]
+    },
+    "loan_2_emi": {
+      "sample": "₹15,800",
+      "slides": [
+        9
+      ]
+    },
+    "loan_2_emi_topup": {
+      "sample": "5% a year",
+      "slides": [
+        9
+      ]
+    },
+    "loan_2_interest_outstanding": {
+      "sample": "₹1,10,000",
+      "slides": [
+        9
+      ]
+    },
+    "loan_2_interest_saved": {
+      "sample": "₹48,000",
+      "slides": [
+        9
+      ]
+    },
+    "loan_2_name": {
+      "sample": "Other Loan",
+      "slides": [
+        9
+      ]
+    },
+    "loan_2_new_closing_year": {
+      "sample": "2029",
+      "slides": [
+        9
+      ]
+    },
+    "loan_2_outstanding": {
+      "sample": "₹6,20,000",
+      "slides": [
+        9
+      ]
+    },
+    "loan_2_prepay_amount": {
+      "sample": "₹2,00,000",
+      "slides": [
+        9
+      ]
+    },
+    "loan_2_rate": {
+      "sample": "9.20%",
+      "slides": [
+        9
+      ]
+    },
+    "loan_2_years_saved": {
+      "sample": "1 year",
+      "slides": [
+        9
+      ]
+    },
+    "loan_heading_suffix": {
+      "sample": " — CAR",
+      "slides": [
+        9
+      ]
+    },
+    "loan_life_continue_note": {
+      "sample": "₹66.3 L still to pay, of which ₹27.4 L is interest",
+      "slides": [
+        23
+      ]
+    },
+    "loan_life_footnote": {
+      "sample": "Loan start year, original principal and amount paid to date are derived from the stated EMI of ₹42,500, the 8.40% rate and the 2039 closing year; outstanding, interest and prepayment figures are as confirmed at review.",
+      "slides": [
+        23
+      ]
+    },
+    "loan_life_headline": {
+      "sample": "Seven years in, the loan is only a quarter repaid — prepaying now ends it in 2034",
+      "slides": [
+        23
+      ]
+    },
+    "loan_life_prepay_label": {
+      "sample": "WITH ₹5 LAKH PREPAID IN 2026 AND A 5% EMI STEP-UP",
+      "slides": [
+        23
+      ]
+    },
+    "marriage_comment": {
+      "sample": "Keep this corpus in a separate folio from the retirement pot. Once withdrawals begin in 2037 it becomes very difficult to tell one pool from the other, and the marriage money is the first thing to be quietly consumed.",
+      "slides": [
+        32
+      ]
+    },
+    "marriage_contributions_end": {
+      "sample": "April 2037",
+      "slides": [
+        32
+      ]
+    },
+    "marriage_corpus": {
+      "sample": "₹1.85 Cr",
+      "slides": [
+        32
+      ]
+    },
+    "marriage_cost_today": {
+      "sample": "₹60.0 L",
+      "slides": [
+        32
+      ]
+    },
+    "marriage_future_cost": {
+      "sample": "₹1.71 Crore",
+      "slides": [
+        32
+      ]
+    },
+    "marriage_inflation": {
+      "sample": "6%",
+      "slides": [
+        32
+      ]
+    },
+    "marriage_intro": {
+      "sample": "A conditional goal. If the children marry later, or more modestly, the corpus returns to the retirement pool rather than being spent because it exists.",
+      "slides": [
+        32
+      ]
+    },
+    "marriage_margin": {
+      "sample": "₹14 L clear of the target",
+      "slides": [
+        32
+      ]
+    },
+    "marriage_src1_label": {
+      "sample": "SIP ₹22,000 a month",
+      "slides": [
+        32
+      ]
+    },
+    "marriage_src1_terms": {
+      "sample": "Equity MF · 12% · 2026 to 2037",
+      "slides": [
+        32
+      ]
+    },
+    "marriage_src1_value": {
+      "sample": "₹63 L",
+      "slides": [
+        32
+      ]
+    },
+    "marriage_src2_label": {
+      "sample": "Emergency SIP redirected",
+      "slides": [
+        32
+      ]
+    },
+    "marriage_src2_terms": {
+      "sample": "₹25,000 a month from 2031 to 2037",
+      "slides": [
+        32
+      ]
+    },
+    "marriage_src2_value": {
+      "sample": "₹26 L",
+      "slides": [
+        32
+      ]
+    },
+    "marriage_src3_label": {
+      "sample": "Compounding after retirement",
+      "slides": [
+        32
+      ]
+    },
+    "marriage_src3_terms": {
+      "sample": "₹89 L left untouched · 11% · 2037 to 2044",
+      "slides": [
+        32
+      ]
+    },
+    "marriage_src3_value": {
+      "sample": "+₹96 L",
+      "slides": [
+        32
+      ]
+    },
+    "marriage_year": {
+      "sample": "2044",
+      "slides": [
+        32
+      ]
+    },
+    "marriage_years_left": {
+      "sample": "18",
+      "slides": [
+        32
+      ]
+    },
+    "monthly_emis": {
+      "sample": "₹58,300",
+      "slides": [
+        3
+      ]
+    },
+    "monthly_expenses": {
+      "sample": "₹1,50,000",
+      "slides": [
+        3
+      ]
+    },
+    "monthly_savings": {
+      "sample": "₹2,20,000",
+      "slides": [
+        3,
+        13
+      ]
+    },
+    "monthly_savings_short": {
+      "sample": "₹2.20 L",
+      "slides": [
+        10
+      ]
+    },
+    "monthly_surplus": {
+      "sample": "₹21,700",
+      "slides": [
+        3
+      ]
+    },
+    "net_worth": {
+      "sample": "₹3.20 Cr",
+      "slides": [
+        4
+      ]
+    },
+    "new_saving_required": {
+      "sample": "Nil",
+      "slides": [
+        10,
+        14
+      ]
+    },
+    "next_step": {
+      "sample": "Authorise the ₹5 lakh prepayment this quarter and submit the term-cover application before the next policy renewal.",
+      "slides": [
+        47
+      ]
+    },
+    "nps_annuity": {
+      "sample": "₹82 L",
+      "slides": [
+        38
+      ]
+    },
+    "nps_comment": {
+      "sample": "The five-year gap between retiring at 55 and NPS maturing at 60 is bridged entirely by the mutual fund corpus. That is planned for on the withdrawal slides and needs no separate provision.",
+      "slides": [
+        38
+      ]
+    },
+    "nps_contribution": {
+      "sample": "₹20,000",
+      "slides": [
+        38
+      ]
+    },
+    "nps_current_value": {
+      "sample": "₹28 L",
+      "slides": [
+        38
+      ]
+    },
+    "nps_description": {
+      "sample": "Market-linked and low-cost, with an additional ₹50,000 deduction. It matures at 60, not at 55 — so it funds the second phase of retirement rather than the first.",
+      "slides": [
+        38
+      ]
+    },
+    "nps_equity_allocation": {
+      "sample": "75E / 25C",
+      "slides": [
+        38
+      ]
+    },
+    "nps_gap_label": {
+      "sample": "five years on",
+      "slides": [
+        38
+      ]
+    },
+    "nps_lumpsum": {
+      "sample": "₹1.24 Cr",
+      "slides": [
+        38
+      ]
+    },
+    "nps_maturity_value": {
+      "sample": "₹2.06 Cr",
+      "slides": [
+        38
+      ]
+    },
+    "nps_maturity_year": {
+      "sample": "2042",
+      "slides": [
+        38
+      ]
+    },
+    "nps_recommendation": {
+      "sample": "Treat NPS as deferred corpus: counted in the lifetime total, but drawn as income from 2042, not available in 2037. Shift towards the C and G tiers from 2039 so the maturity value is not set by one bad market year.",
+      "slides": [
+        38
+      ]
+    },
+    "nps_roi": {
+      "sample": "10%",
+      "slides": [
+        38
+      ]
+    },
+    "nps_value_at_retirement": {
+      "sample": "₹1.28 Cr",
+      "slides": [
+        38
+      ]
+    },
+    "outcome_goals_note": {
+      "sample": "Retirement, both educations and the renovation are each funded by a named cash flow, not by whatever is left over.",
+      "slides": [
+        46
+      ]
+    },
+    "outcome_loan_note": {
+      "sample": "Debt-free in 2034 instead of 2039, with ₹11.7 L of interest never paid across both loans.",
+      "slides": [
+        46
+      ]
+    },
+    "outcome_protection_note": {
+      "sample": "Life cover rises from 4.2× to 10× income and health cover from ₹10 L to ₹35 L, on the same premium.",
+      "slides": [
+        46
+      ]
+    },
+    "outcomes_comment": {
+      "sample": "The ₹21,700 monthly surplus and the ₹10 lakh released from deposits add about ₹0.81 crore by 2036. That is what carries the corpus past the ₹6.25 crore the retirement income needs.",
+      "slides": [
+        46
+      ]
+    },
+    "outcomes_headline": {
+      "sample": "The three moves together turn a ₹0.75 crore retirement shortfall into a small surplus",
+      "slides": [
+        46
+      ]
+    },
+    "pf_bar_1_value": {
+      "sample": "₹78 L",
+      "slides": [
+        35
+      ]
+    },
+    "pf_bar_1_year": {
+      "sample": "2026",
+      "slides": [
+        35
+      ]
+    },
+    "pf_bar_2_value": {
+      "sample": "₹1.42 Cr",
+      "slides": [
+        35
+      ]
+    },
+    "pf_bar_2_year": {
+      "sample": "2031",
+      "slides": [
+        35
+      ]
+    },
+    "pf_bar_3_value": {
+      "sample": "₹2.10 Cr",
+      "slides": [
+        35
+      ]
+    },
+    "pf_bar_3_year": {
+      "sample": "2034",
+      "slides": [
+        35
+      ]
+    },
+    "pf_bar_4_value": {
+      "sample": "₹2.85 Cr",
+      "slides": [
+        35
+      ]
+    },
+    "pf_bar_4_year": {
+      "sample": "2037",
+      "slides": [
+        35
+      ]
+    },
+    "pf_comment": {
+      "sample": "At 8.1% the PF balance roughly doubles every nine years with no market risk. If the declared rate falls below 7.5%, the case for the voluntary top-up weakens against equity over an eleven-year horizon.",
+      "slides": [
+        35
+      ]
+    },
+    "pf_contribution": {
+      "sample": "₹38,000",
+      "slides": [
+        35
+      ]
+    },
+    "pf_current_value": {
+      "sample": "₹78 L",
+      "slides": [
+        35
+      ]
+    },
+    "pf_description": {
+      "sample": "Employer and employee contribute together each month. Interest is declared annually, the maturity is tax-free, and the balance compounds untouched until you leave employment.",
+      "slides": [
+        35
+      ]
+    },
+    "pf_recommendation": {
+      "sample": "Transfer, never withdraw, on a job change. Leave the balance to compound to 2037, then move it into the debt core of the retirement portfolio.",
+      "slides": [
+        35
+      ]
+    },
+    "pf_roi": {
+      "sample": "8.10%",
+      "slides": [
+        35
+      ]
+    },
+    "pf_step_up": {
+      "sample": "5% / 2 yrs",
+      "slides": [
+        35
+      ]
+    },
+    "pf_value_at_retirement": {
+      "sample": "₹2.85 Crore",
+      "slides": [
+        35
+      ]
+    },
+    "pf_value_note": {
+      "sample": "20% of the total corpus, entirely tax-free",
+      "slides": [
+        35
+      ]
+    },
+    "pg_1_basis": {
+      "sample": "₹45 L today, at 10% over 10 years — a two-year course abroad",
+      "slides": [
+        31
+      ]
+    },
+    "pg_1_child": {
+      "sample": "AARAV",
+      "slides": [
+        31
+      ]
+    },
+    "pg_1_corpus": {
+      "sample": "₹1.34 Cr",
+      "slides": [
+        31
+      ]
+    },
+    "pg_1_src1_label": {
+      "sample": "SIP ₹22,000 · equity MF · 12%",
+      "slides": [
+        31
+      ]
+    },
+    "pg_1_src1_value": {
+      "sample": "₹51 L",
+      "slides": [
+        31
+      ]
+    },
+    "pg_1_src2_label": {
+      "sample": "UG SIP ₹35,000 redirected from 2032",
+      "slides": [
+        31
+      ]
+    },
+    "pg_1_src2_value": {
+      "sample": "₹21 L",
+      "slides": [
+        31
+      ]
+    },
+    "pg_1_src3_label": {
+      "sample": "Lumpsum ₹20 L from direct equity",
+      "slides": [
+        31
+      ]
+    },
+    "pg_1_src3_value": {
+      "sample": "₹62 L",
+      "slides": [
+        31
+      ]
+    },
+    "pg_1_target": {
+      "sample": "₹1.17 Crore",
+      "slides": [
+        31
+      ]
+    },
+    "pg_1_year": {
+      "sample": "2036",
+      "slides": [
+        31
+      ]
+    },
+    "pg_2_basis": {
+      "sample": "₹45 L today, at 10% over 15 years — four years after retirement",
+      "slides": [
+        31
+      ]
+    },
+    "pg_2_child": {
+      "sample": "IRA",
+      "slides": [
+        31
+      ]
+    },
+    "pg_2_corpus": {
+      "sample": "₹1.93 Cr",
+      "slides": [
+        31
+      ]
+    },
+    "pg_2_src1_label": {
+      "sample": "SIP ₹18,000 · equity MF · 12%",
+      "slides": [
+        31
+      ]
+    },
+    "pg_2_src1_value": {
+      "sample": "₹90 L",
+      "slides": [
+        31
+      ]
+    },
+    "pg_2_src2_label": {
+      "sample": "UG SIP ₹20,000 redirected 2037–2041",
+      "slides": [
+        31
+      ]
+    },
+    "pg_2_src2_value": {
+      "sample": "₹17 L",
+      "slides": [
+        31
+      ]
+    },
+    "pg_2_src3_label": {
+      "sample": "Surplus from Aarav’s PG corpus",
+      "slides": [
+        31
+      ]
+    },
+    "pg_2_src3_value": {
+      "sample": "₹28 L",
+      "slides": [
+        31
+      ]
+    },
+    "pg_2_src4_label": {
+      "sample": "Endowment maturity, reinvested",
+      "slides": [
+        31
+      ]
+    },
+    "pg_2_src4_value": {
+      "sample": "₹58 L",
+      "slides": [
+        31
+      ]
+    },
+    "pg_2_target": {
+      "sample": "₹1.88 Crore",
+      "slides": [
+        31
+      ]
+    },
+    "pg_2_year": {
+      "sample": "2041",
+      "slides": [
+        31
+      ]
+    },
+    "pg_combined_corpus": {
+      "sample": "₹3.27 Cr",
+      "slides": [
+        31
+      ]
+    },
+    "pg_combined_required": {
+      "sample": "₹3.05 Cr",
+      "slides": [
+        31
+      ]
+    },
+    "pg_comment": {
+      "sample": "Ira’s postgraduate year falls four years into retirement. It is funded from its own corpus, not from the retirement pot — that separation is deliberate and should be maintained even if markets are strong in 2037.",
+      "slides": [
+        31
+      ]
+    },
+    "pg_monthly": {
+      "sample": "₹40,000",
+      "slides": [
+        31
+      ]
+    },
+    "pg_years": {
+      "sample": "2036 AND 2041",
+      "slides": [
+        31
+      ]
+    },
+    "policies_comment": {
+      "sample": "Annual premium is ₹1.35 lakh, of which ₹51,000 buys very little cover. Life cover is 4.2× annual income against a 10× benchmark, and ₹10 lakh of health cover for four is thin.",
+      "slides": [
+        16
+      ]
+    },
+    "policy_1_maturity": {
+      "sample": "₹1.5 Cr cover to 2044",
+      "slides": [
+        16
+      ]
+    },
+    "policy_1_name": {
+      "sample": "Term Plan — Self",
+      "slides": [
+        16
+      ]
+    },
+    "policy_1_payout": {
+      "sample": "—",
+      "slides": [
+        16
+      ]
+    },
+    "policy_1_premium": {
+      "sample": "₹24,800",
+      "slides": [
+        16
+      ]
+    },
+    "policy_1_remarks": {
+      "sample": "Raise towards ₹5 Cr — cover is 4.2× annual income",
+      "slides": [
+        16
+      ]
+    },
+    "policy_1_start": {
+      "sample": "Jun 2019",
+      "slides": [
+        16
+      ]
+    },
+    "policy_2_maturity": {
+      "sample": "₹75 L cover to 2046",
+      "slides": [
+        16
+      ]
+    },
+    "policy_2_name": {
+      "sample": "Term Plan — Spouse",
+      "slides": [
+        16
+      ]
+    },
+    "policy_2_payout": {
+      "sample": "—",
+      "slides": [
+        16
+      ]
+    },
+    "policy_2_premium": {
+      "sample": "₹14,200",
+      "slides": [
+        16
+      ]
+    },
+    "policy_2_remarks": {
+      "sample": "Top up to ₹1 Cr when the second income restarts",
+      "slides": [
+        16
+      ]
+    },
+    "policy_2_start": {
+      "sample": "Mar 2021",
+      "slides": [
+        16
+      ]
+    },
+    "policy_3_maturity": {
+      "sample": "₹10 L, renews annually",
+      "slides": [
+        16
+      ]
+    },
+    "policy_3_name": {
+      "sample": "Family Floater Health",
+      "slides": [
+        16
+      ]
+    },
+    "policy_3_payout": {
+      "sample": "—",
+      "slides": [
+        16
+      ]
+    },
+    "policy_3_premium": {
+      "sample": "₹38,500",
+      "slides": [
+        16
+      ]
+    },
+    "policy_3_remarks": {
+      "sample": "Add a ₹25 L super top-up this year",
+      "slides": [
+        16
+      ]
+    },
+    "policy_3_start": {
+      "sample": "Aug 2018",
+      "slides": [
+        16
+      ]
+    },
+    "policy_4_maturity": {
+      "sample": "₹9.6 L in 2032",
+      "slides": [
+        16
+      ]
+    },
+    "policy_4_name": {
+      "sample": "Endowment Policy",
+      "slides": [
+        16
+      ]
+    },
+    "policy_4_payout": {
+      "sample": "—",
+      "slides": [
+        16
+      ]
+    },
+    "policy_4_premium": {
+      "sample": "₹51,000",
+      "slides": [
+        16
+      ]
+    },
+    "policy_4_remarks": {
+      "sample": "Effective return ~4.6%; hold to maturity, do not renew",
+      "slides": [
+        16
+      ]
+    },
+    "policy_4_start": {
+      "sample": "Jan 2012",
+      "slides": [
+        16
+      ]
+    },
+    "policy_5_maturity": {
+      "sample": "₹50 L cover",
+      "slides": [
+        16
+      ]
+    },
+    "policy_5_name": {
+      "sample": "Personal Accident",
+      "slides": [
+        16
+      ]
+    },
+    "policy_5_payout": {
+      "sample": "—",
+      "slides": [
+        16
+      ]
+    },
+    "policy_5_premium": {
+      "sample": "₹6,400",
+      "slides": [
+        16
+      ]
+    },
+    "policy_5_remarks": {
+      "sample": "Adequate; no change",
+      "slides": [
+        16
+      ]
+    },
+    "policy_5_start": {
+      "sample": "Nov 2022",
+      "slides": [
+        16
+      ]
+    },
+    "ppf_accounts": {
+      "sample": "Two",
+      "slides": [
+        36
+      ]
+    },
+    "ppf_bar_1_contrib": {
+      "sample": "32",
+      "slides": [
+        36
+      ]
+    },
+    "ppf_bar_1_total": {
+      "sample": "₹32L",
+      "slides": [
+        36
+      ]
+    },
+    "ppf_bar_1_year": {
+      "sample": "2026",
+      "slides": [
+        36
+      ]
+    },
+    "ppf_bar_2_contrib": {
+      "sample": "39",
+      "slides": [
+        36
+      ]
+    },
+    "ppf_bar_2_interest": {
+      "sample": "14",
+      "slides": [
+        36
+      ]
+    },
+    "ppf_bar_2_total": {
+      "sample": "₹53L",
+      "slides": [
+        36
+      ]
+    },
+    "ppf_bar_2_year": {
+      "sample": "2031",
+      "slides": [
+        36
+      ]
+    },
+    "ppf_bar_3_contrib": {
+      "sample": "44",
+      "slides": [
+        36
+      ]
+    },
+    "ppf_bar_3_interest": {
+      "sample": "27",
+      "slides": [
+        36
+      ]
+    },
+    "ppf_bar_3_total": {
+      "sample": "₹71L",
+      "slides": [
+        36
+      ]
+    },
+    "ppf_bar_3_year": {
+      "sample": "2034",
+      "slides": [
+        36
+      ]
+    },
+    "ppf_bar_4_contrib": {
+      "sample": "49",
+      "slides": [
+        36
+      ]
+    },
+    "ppf_bar_4_interest": {
+      "sample": "43",
+      "slides": [
+        36
+      ]
+    },
+    "ppf_bar_4_total": {
+      "sample": "₹92L",
+      "slides": [
+        36
+      ]
+    },
+    "ppf_bar_4_year": {
+      "sample": "2037",
+      "slides": [
+        36
+      ]
+    },
+    "ppf_comment": {
+      "sample": "Contributing on the fifth of April rather than in March adds roughly ₹2.4 lakh over the eleven years, for no extra money. It is the cheapest improvement in this deck.",
+      "slides": [
+        36
+      ]
+    },
+    "ppf_contribution": {
+      "sample": "₹1.50 L",
+      "slides": [
+        36
+      ]
+    },
+    "ppf_current_value": {
+      "sample": "₹32 L",
+      "slides": [
+        36
+      ]
+    },
+    "ppf_description": {
+      "sample": "A voluntary, government-backed account with a fifteen-year term, extendable in five-year blocks. Contributions, interest and maturity are all tax-free.",
+      "slides": [
+        36
+      ]
+    },
+    "ppf_recommendation": {
+      "sample": "Fund both accounts before the fifth of April each year so the full balance earns interest for the whole year. Extend rather than close at maturity.",
+      "slides": [
+        36
+      ]
+    },
+    "ppf_roi": {
+      "sample": "7.10%",
+      "slides": [
+        36
+      ]
+    },
+    "ppf_value_at_retirement": {
+      "sample": "₹92 Lakh",
+      "slides": [
+        36
+      ]
+    },
+    "ppf_value_note": {
+      "sample": "Tax-free, and available in full from 2037",
+      "slides": [
+        36
+      ]
+    },
+    "prepay_end_note": {
+      "sample": "the loan ends in 2034, two years before retirement",
+      "slides": [
+        25
+      ]
+    },
+    "prepay_funding_comment": {
+      "sample": "The reserve stays fully intact at twelve months. Only the excess above it is put to work, so the family takes on no additional risk and gives up no liquidity it actually needs. The ₹2 lakh car-loan prepayment comes from monthly surplus, not from this pool.",
+      "slides": [
+        21
+      ]
+    },
+    "prepay_funding_headline": {
+      "sample": "The prepayment comes from idle deposits, not from the family's monthly budget",
+      "slides": [
+        21
+      ]
+    },
+    "prepay_impact_comment": {
+      "sample": "The deposits behind the prepayment earn about 5.3% after tax while the loan charges 8.4%. Moving ₹5 lakh across that gap is the single highest-certainty return available in the plan, and it needs no market view.",
+      "slides": [
+        25
+      ]
+    },
+    "prepay_impact_headline": {
+      "sample": "₹5 lakh prepaid today removes ₹11.2 lakh of interest and five years of EMI",
+      "slides": [
+        25
+      ]
+    },
+    "prepay_return_note": {
+      "sample": "a 224% return on the ₹5 lakh, tax-free",
+      "slides": [
+        25
+      ]
+    },
+    "protection_intro": {
+      "sample": "Every goal in this plan assumes ten more years of income. Protection is what makes that assumption safe to rely on.",
+      "slides": [
+        15
+      ]
+    },
+    "rental_income": {
+      "sample": "₹0.63 L",
+      "slides": [
+        41
+      ]
+    },
+    "retirement_age": {
+      "sample": "55",
+      "slides": [
+        2,
+        34,
+        40
+      ]
+    },
+    "retirement_monthly_expense": {
+      "sample": "₹2.69 L",
+      "slides": [
+        41
+      ]
+    },
+    "retirement_section_intro": {
+      "sample": "Ten years of accumulation against thirty-five years of drawdown. Each retirement asset is projected through April 2037 on its own terms, then consolidated.",
+      "slides": [
+        34
+      ]
+    },
+    "retirement_sip_final": {
+      "sample": "₹1,85,300",
+      "slides": [
+        14
+      ]
+    },
+    "retirement_sip_final_year": {
+      "sample": "2035",
+      "slides": [
+        14
+      ]
+    },
+    "retirement_sip_today": {
+      "sample": "₹30,000",
+      "slides": [
+        14
+      ]
+    },
+    "retirement_summary_1": {
+      "sample": "On these assumptions, retiring at 55 needs a corpus of about ₹6.25 crore to fund ₹2.06 lakh a month, inflated at 6%, to age 90. The plan currently builds ₹5.50 crore, leaving a gap of ₹0.75 crore.",
+      "slides": [
+        41
+      ]
+    },
+    "retirement_summary_2": {
+      "sample": "Three levers close it, and any two are sufficient: directing the ₹21,700 monthly surplus into the retirement SIP and deploying the ₹10 lakh FD reallocation as a lumpsum, which together add ₹0.81 crore by 2036; working to 57 instead of 55; or monetising the second property at retirement. Once funded, a core-and-satellite structure keeps the essential income in stable assets and leaves the satellite free for growth and legacy planning.",
+      "slides": [
+        41
+      ]
+    },
+    "retirement_year": {
+      "sample": "2036",
+      "slides": [
+        2,
+        18,
+        40,
+        41,
+        46
+      ]
+    },
+    "review_date": {
+      "sample": "September 2026",
+      "slides": [
+        1
+      ]
+    },
+    "review_date_caps": {
+      "sample": "SEPTEMBER 2026",
+      "slides": [
+        49
+      ]
+    },
+    "review_year": {
+      "sample": "2026",
+      "slides": [
+        23
+      ]
+    },
+    "risk_appetite": {
+      "sample": "Moderately aggressive",
+      "slides": [
+        2
+      ]
+    },
+    "roadmap_1_amount": {
+      "sample": "₹7.2 L at goal year",
+      "slides": [
+        11
+      ]
+    },
+    "roadmap_1_horizon": {
+      "sample": "3 YRS",
+      "slides": [
+        11
+      ]
+    },
+    "roadmap_1_label": {
+      "sample": "International family vacation",
+      "slides": [
+        11
+      ]
+    },
+    "roadmap_1_year": {
+      "sample": "2029",
+      "slides": [
+        11
+      ]
+    },
+    "roadmap_2_amount": {
+      "sample": "₹40 L at goal year",
+      "slides": [
+        11
+      ]
+    },
+    "roadmap_2_horizon": {
+      "sample": "5 YRS",
+      "slides": [
+        11
+      ]
+    },
+    "roadmap_2_label": {
+      "sample": "Aarav — undergraduate",
+      "slides": [
+        11
+      ]
+    },
+    "roadmap_2_year": {
+      "sample": "2031",
+      "slides": [
+        11
+      ]
+    },
+    "roadmap_3_amount": {
+      "sample": "₹94 L at goal year",
+      "slides": [
+        11
+      ]
+    },
+    "roadmap_3_horizon": {
+      "sample": "9 YRS",
+      "slides": [
+        11
+      ]
+    },
+    "roadmap_3_label": {
+      "sample": "Aarav — postgraduate",
+      "slides": [
+        11
+      ]
+    },
+    "roadmap_3_year": {
+      "sample": "2035",
+      "slides": [
+        11
+      ]
+    },
+    "roadmap_4_amount": {
+      "sample": "₹6.25 Cr corpus required",
+      "slides": [
+        11
+      ]
+    },
+    "roadmap_4_horizon": {
+      "sample": "10 YRS",
+      "slides": [
+        11
+      ]
+    },
+    "roadmap_4_label": {
+      "sample": "Retirement at 55 · Isha’s undergraduate",
+      "slides": [
+        11
+      ]
+    },
+    "roadmap_4_year": {
+      "sample": "2036",
+      "slides": [
+        11
+      ]
+    },
+    "roadmap_5_amount": {
+      "sample": "₹66.5 L from SSY",
+      "slides": [
+        11
+      ]
+    },
+    "roadmap_5_horizon": {
+      "sample": "14 YRS",
+      "slides": [
+        11
+      ]
+    },
+    "roadmap_5_label": {
+      "sample": "Isha — postgraduate · SSY matures",
+      "slides": [
+        11
+      ]
+    },
+    "roadmap_5_year": {
+      "sample": "2040",
+      "slides": [
+        11
+      ]
+    },
+    "savings_pct": {
+      "sample": "49%",
+      "slides": [
+        3,
+        7
+      ]
+    },
+    "sip_1_amount": {
+      "sample": "₹77,000",
+      "slides": [
+        13
+      ]
+    },
+    "sip_1_label": {
+      "sample": "Education — UG 2031, PG 2035",
+      "slides": [
+        13
+      ]
+    },
+    "sip_2_amount": {
+      "sample": "₹30,000",
+      "slides": [
+        13
+      ]
+    },
+    "sip_2_label": {
+      "sample": "Retirement 2036 — new SIP",
+      "slides": [
+        13
+      ]
+    },
+    "sip_3_amount": {
+      "sample": "₹59,500",
+      "slides": [
+        13
+      ]
+    },
+    "sip_3_label": {
+      "sample": "EPF · PPF · NPS — statutory",
+      "slides": [
+        13
+      ]
+    },
+    "sip_4_amount": {
+      "sample": "₹12,500",
+      "slides": [
+        13
+      ]
+    },
+    "sip_4_label": {
+      "sample": "Sukanya Samriddhi — Isha",
+      "slides": [
+        13
+      ]
+    },
+    "sip_5_amount": {
+      "sample": "₹35,000",
+      "slides": [
+        13
+      ]
+    },
+    "sip_5_label": {
+      "sample": "Vacation 2029 · Renovation 2031",
+      "slides": [
+        13
+      ]
+    },
+    "sip_6_amount": {
+      "sample": "₹6,000",
+      "slides": [
+        13
+      ]
+    },
+    "sip_6_label": {
+      "sample": "Marriage 2044",
+      "slides": [
+        13
+      ]
+    },
+    "sip_bar_1_pct": {
+      "sample": "35%",
+      "slides": [
+        13
+      ]
+    },
+    "sip_bar_2_pct": {
+      "sample": "27%",
+      "slides": [
+        13
+      ]
+    },
+    "sip_bar_3_pct": {
+      "sample": "16%",
+      "slides": [
+        13
+      ]
+    },
+    "sip_bar_4_pct": {
+      "sample": "14%",
+      "slides": [
+        13
+      ]
+    },
+    "sip_comment": {
+      "sample": "Two-thirds of the monthly commitment funds goals inside the next ten years, which is why only ₹30,000 currently reaches retirement. The redirection plan corrects that from 2029 onwards without raising the total.",
+      "slides": [
+        13
+      ]
+    },
+    "spouse_dob": {
+      "sample": "04 August 1983",
+      "slides": [
+        2
+      ]
+    },
+    "spouse_name": {
+      "sample": "Mrs. Aditi Iyer",
+      "slides": [
+        2
+      ]
+    },
+    "ssy_annual_contribution": {
+      "sample": "₹1,50,000",
+      "slides": [
+        33
+      ]
+    },
+    "ssy_comment": {
+      "sample": "Total contributions of ₹22.5 lakh become ₹66.5 lakh, tax-free. Half of that funds Isha’s undergraduate course in 2036 through a partial withdrawal; the balance carries to 2040.",
+      "slides": [
+        33
+      ]
+    },
+    "ssy_contributions_end": {
+      "sample": "2034",
+      "slides": [
+        33
+      ]
+    },
+    "ssy_current_value": {
+      "sample": "₹13.6 L",
+      "slides": [
+        33
+      ]
+    },
+    "ssy_end_date": {
+      "sample": "Apr 2040",
+      "slides": [
+        33
+      ]
+    },
+    "ssy_interest_at_maturity": {
+      "sample": "₹44.0 L",
+      "slides": [
+        33
+      ]
+    },
+    "ssy_interest_to_date": {
+      "sample": "₹3.1 L",
+      "slides": [
+        33
+      ]
+    },
+    "ssy_maturity_value": {
+      "sample": "₹66.5 L",
+      "slides": [
+        33
+      ]
+    },
+    "ssy_rate": {
+      "sample": "8.20%",
+      "slides": [
+        33
+      ]
+    },
+    "ssy_start_date": {
+      "sample": "Apr 2019",
+      "slides": [
+        33
+      ]
+    },
+    "suggestion_1_desc": {
+      "sample": "₹5 lakh from the deposit book, with a 5% EMI step-up each year. The deposits earn 5.3% after tax; the loan costs 8.4%.",
+      "slides": [
+        45
+      ]
+    },
+    "suggestion_1_outcome": {
+      "sample": "₹11.2 L interest saved · closes 2034",
+      "slides": [
+        45
+      ]
+    },
+    "suggestion_1_title": {
+      "sample": "Prepay the home loan",
+      "slides": [
+        45
+      ]
+    },
+    "suggestion_2_desc": {
+      "sample": "Hold the endowment to maturity and stop renewing it. The same premium budget buys term cover to ₹5 crore and a ₹25 lakh health top-up.",
+      "slides": [
+        45
+      ]
+    },
+    "suggestion_2_outcome": {
+      "sample": "Cover moves from 4.2× to 10× income",
+      "slides": [
+        45
+      ]
+    },
+    "suggestion_2_title": {
+      "sample": "Rebuild the protection mix",
+      "slides": [
+        45
+      ]
+    },
+    "suggestion_3_desc": {
+      "sample": "As each loan and goal closes, the instalment moves straight to the retirement SIP instead of into spending.",
+      "slides": [
+        45
+      ]
+    },
+    "suggestion_3_outcome": {
+      "sample": "₹30,000 becomes ₹1.85 L a month",
+      "slides": [
+        45
+      ]
+    },
+    "suggestion_3_title": {
+      "sample": "Re-tag every freed EMI",
+      "slides": [
+        45
+      ]
+    },
+    "suggestions_comment": {
+      "sample": "None of the three needs fresh money. Each one reuses cash the household already commits every month, which is why the plan can close the retirement gap without changing the family's standard of living.",
+      "slides": [
+        45
+      ]
+    },
+    "summary_goal_1_name": {
+      "sample": "Kid’s Education",
+      "slides": [
+        2
+      ]
+    },
+    "summary_goal_1_years": {
+      "sample": "2031 · 2035 · 2036",
+      "slides": [
+        2
+      ]
+    },
+    "summary_goal_2_name": {
+      "sample": "Retirement",
+      "slides": [
+        2
+      ]
+    },
+    "summary_goal_2_years": {
+      "sample": "2036",
+      "slides": [
+        2
+      ]
+    },
+    "summary_goal_3_name": {
+      "sample": "Vacation Planning",
+      "slides": [
+        2
+      ]
+    },
+    "summary_goal_3_years": {
+      "sample": "2029",
+      "slides": [
+        2
+      ]
+    },
+    "takeaway_1_desc": {
+      "sample": "₹5 lakh of idle deposits removes ₹11.2 lakh of interest and five years of EMI.",
+      "slides": [
+        47
+      ]
+    },
+    "takeaway_1_title": {
+      "sample": "The home loan ends in 2034, not 2039",
+      "slides": [
+        47
+      ]
+    },
+    "takeaway_2_desc": {
+      "sample": "₹1.35 lakh a year moves life cover from 4.2× to 10× income and health cover to ₹35 lakh.",
+      "slides": [
+        47
+      ]
+    },
+    "takeaway_2_title": {
+      "sample": "Cover trebles on the same premium",
+      "slides": [
+        47
+      ]
+    },
+    "takeaway_3_desc": {
+      "sample": "The retirement SIP steps up from ₹30,000 to ₹1.85 lakh a month by 2035.",
+      "slides": [
+        47
+      ]
+    },
+    "takeaway_3_title": {
+      "sample": "Freed EMIs go to work, not to spending",
+      "slides": [
+        47
+      ]
+    },
+    "takeaway_4_desc": {
+      "sample": "The corpus reaches ₹6.31 crore against ₹6.25 crore needed, with no new saving.",
+      "slides": [
+        47
+      ]
+    },
+    "takeaway_4_title": {
+      "sample": "The ₹0.75 crore retirement gap closes",
+      "slides": [
+        47
+      ]
+    },
+    "total_assets": {
+      "sample": "₹3.64 Cr",
+      "slides": [
+        4
+      ]
+    },
+    "total_liabilities": {
+      "sample": "₹44.2 L",
+      "slides": [
+        4,
+        18
+      ]
+    },
+    "ug_1_basis": {
+      "sample": "₹25 L today, at 10% education inflation over 6 years",
+      "slides": [
+        30
+      ]
+    },
+    "ug_1_child": {
+      "sample": "AARAV",
+      "slides": [
+        30
+      ]
+    },
+    "ug_1_corpus": {
+      "sample": "₹47 L",
+      "slides": [
+        30
+      ]
+    },
+    "ug_1_note": {
+      "sample": "₹35,000 redirects to Aarav’s PG from April 2032.",
+      "slides": [
+        30
+      ]
+    },
+    "ug_1_src1_label": {
+      "sample": "SIP ₹35,000 · equity MF · 12%",
+      "slides": [
+        30
+      ]
+    },
+    "ug_1_src1_value": {
+      "sample": "₹37 L",
+      "slides": [
+        30
+      ]
+    },
+    "ug_1_src2_label": {
+      "sample": "Lumpsum ₹5 L from mutual funds",
+      "slides": [
+        30
+      ]
+    },
+    "ug_1_src2_value": {
+      "sample": "₹10 L",
+      "slides": [
+        30
+      ]
+    },
+    "ug_1_target": {
+      "sample": "₹44 Lakh",
+      "slides": [
+        30
+      ]
+    },
+    "ug_1_year": {
+      "sample": "2032",
+      "slides": [
+        30
+      ]
+    },
+    "ug_2_basis": {
+      "sample": "₹25 L today, at 10% education inflation over 11 years",
+      "slides": [
+        30
+      ]
+    },
+    "ug_2_child": {
+      "sample": "IRA",
+      "slides": [
+        30
+      ]
+    },
+    "ug_2_corpus": {
+      "sample": "₹81 L",
+      "slides": [
+        30
+      ]
+    },
+    "ug_2_note": {
+      "sample": "₹20,000 redirects to Ira’s PG from April 2037.",
+      "slides": [
+        30
+      ]
+    },
+    "ug_2_src1_label": {
+      "sample": "SIP ₹20,000 · equity MF · 12%",
+      "slides": [
+        30
+      ]
+    },
+    "ug_2_src1_value": {
+      "sample": "₹53 L",
+      "slides": [
+        30
+      ]
+    },
+    "ug_2_src2_label": {
+      "sample": "Lumpsum ₹8 L from mutual funds",
+      "slides": [
+        30
+      ]
+    },
+    "ug_2_src2_value": {
+      "sample": "₹28 L",
+      "slides": [
+        30
+      ]
+    },
+    "ug_2_target": {
+      "sample": "₹71 Lakh",
+      "slides": [
+        30
+      ]
+    },
+    "ug_2_year": {
+      "sample": "2037",
+      "slides": [
+        30
+      ]
+    },
+    "ug_combined_corpus": {
+      "sample": "₹1.28 Cr",
+      "slides": [
+        30
+      ]
+    },
+    "ug_combined_required": {
+      "sample": "₹1.15 Cr",
+      "slides": [
+        30
+      ]
+    },
+    "ug_comment": {
+      "sample": "If either course is taken abroad, add rupee depreciation of roughly 3% a year on top of the 10% — that raises Aarav’s requirement to about ₹53 lakh. We will re- test this at the 2029 review, when the subject choice is clearer.",
+      "slides": [
+        30
+      ]
+    },
+    "ug_monthly": {
+      "sample": "₹55,000",
+      "slides": [
+        30
+      ]
+    },
+    "ug_years": {
+      "sample": "2032 AND 2037",
+      "slides": [
+        30
+      ]
+    },
+    "years_to_retirement": {
+      "sample": "10",
+      "slides": [
+        2,
+        41
+      ]
+    },
+    "page_no": {
+      "sample": "computed per slide",
+      "slides": "all numbered slides"
+    },
+    "page_total": {
+      "sample": "49",
+      "slides": "all numbered slides"
+    }
+  },
+  "graphics_not_tokenised": {
+    "3": "Cash-flow bar: segment widths are shapes sized to the expense / EMI / savings split.",
+    "5": "Allocation donut (SVG image7.svg) — ring segments and the '₹3.64 Cr' total are baked into the image.",
+    "6": "Bucket bar: segment widths are shapes sized to the 40 / 34 / 26 split.",
+    "7": "Health-score gauge (SVG image9.svg) — the '78%' score and the arc are baked into the image.",
+    "13": "SIP allocation bar: segment widths are shapes sized to the SIP split.",
+    "18": "Native chart (chart1): life cover in force vs recommended.",
+    "23": "Loan timeline: bar lengths and marker positions are shapes sized to the loan dates.",
+    "24": "Native chart: EMI split into interest and principal by year.",
+    "25": "Native chart: interest still payable, continue vs prepay.",
+    "35": "PF balance bars: shape heights sized to the projected balance.",
+    "36": "PPF stacked bars: custGeom paths sized to contributions and interest.",
+    "37": "Equity split bar: earmarked vs retained widths.",
+    "38": "NPS bars: value at retirement vs at maturity.",
+    "39": "Native chart: retirement SIP cash-flow ladder (waterfall).",
+    "42": "Corpus donut (SVG image32.svg) and annuity bar chart (SVG image33.svg).",
+    "46": "Native chart: retirement corpus — current path / required / with the plan."
+  }
+}

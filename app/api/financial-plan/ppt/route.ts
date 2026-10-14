@@ -17,8 +17,11 @@ export async function POST(req: Request) {
     );
   }
 
+  // The 49-slide Goal Based Planning deck (Financial_Planning/PPTX_Migration).
+  // The previous deck is still served at /financial-plan/ppt; point this back
+  // there to revert.
   const { ok, status, data, contentType, contentDisposition, errorDetail } =
-    await fetchFastApiBinary("/financial-plan/ppt", {
+    await fetchFastApiBinary("/financial-plan/ppt-v2", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ workflow_state }),

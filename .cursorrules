@@ -161,7 +161,7 @@ End each task with a short structured report:
 - Custom tools: Financial_Planning/Tools/custom_tools.py
 - Forex (live USD/INR) utility: Financial_Planning/Utilities/forex_utils.py
 - Plan UI panel: components/FinancialPlanPanel.tsx
-- PPT builder (uses self.final_state): Financial_Planning/Utilities/ppt_builder.py
+- PPT deck (reads workflow_state): Financial_Planning/PPTX_Migration/adapter.py → FP-PPT-AI-NEW/placeholder_template_package (see FP-PPT-AI-NEW/README.md)
 
 There are TWO separate agents — the planning agent and the chat
 supervisor (`dashboard_agent`). A change to one does not affect

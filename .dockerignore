@@ -27,6 +27,9 @@ __pycache__/
 *.log
 docs/plans
 
+# Real client decks from local test runs (git-ignored, but present on dev machines)
+FP-PPT-AI-NEW/placeholder_template_package/client_runs
+
 # OS cruft
 .DS_Store
 Thumbs.db

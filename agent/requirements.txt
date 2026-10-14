@@ -1,11 +1,23 @@
-copilotkit>=0.1.89
-ag-ui-langgraph>=0.0.35
-fastapi>=0.115.0
-uvicorn[standard]>=0.32.0
-langgraph>=0.4.0
-langchain>=1.0.0
-langchain-openai>=0.3.0
-tavily-python>=0.5.0
-python-dotenv>=1.0.0
-requests>=2.32.0
-pypdf>=4.0.0
+# Pinned to the exact versions verified working in .venv.
+#
+# These were `>=` floors, which let every image rebuild resolve to whatever was
+# newest that day. That drift broke deployed chat: a newer ag-ui-langgraph began
+# passing `enable_legacy_on_interrupt_event` into LangGraphAGUIAgent.__init__(),
+# which the resolved copilotkit did not accept, so every POST /copilotkit raised
+# TypeError in agui_agent.clone() while startup still looked healthy.
+#
+# copilotkit and ag-ui-langgraph must move together — upgrade them as a pair and
+# retest chat end-to-end before changing either.
+copilotkit==0.1.90
+ag-ui-langgraph==0.0.35
+ag-ui-protocol==0.1.18
+fastapi==0.136.1
+uvicorn[standard]==0.47.0
+langgraph==1.2.0
+langchain==1.3.1
+langchain-core==1.4.0
+langchain-openai==1.2.1
+tavily-python==0.7.24
+python-dotenv==1.2.2
+requests==2.34.2
+pypdf==6.12.1

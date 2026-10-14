@@ -16,7 +16,12 @@ def _base_state(
     esops=None,
     rsu_portfolio=None,
     goals=None,
+    extra_breakdown=None,
 ):
+    breakdown = {
+        "fixed_deposits": {"future_value": fd_fv, "rate": fd_rate},
+    }
+    breakdown.update(extra_breakdown or {})
     return {
         "client_data": {
             "client_data": {
@@ -39,9 +44,7 @@ def _base_state(
         },
         "wealth_at_retirement": {
             "retirement_year": 2036,
-            "breakdown": {
-                "fixed_deposits": {"future_value": fd_fv, "rate": fd_rate},
-            },
+            "breakdown": breakdown,
         },
         "optimal_goal_allocation": {
             "goals": goals or [],
@@ -80,7 +83,9 @@ def test_multi_source_last_row_capped_and_rows_sum_to_desired():
         fd_fv=0,
         mf_cv=0,
         years_to_retirement=years,
-        esops=[{"vested_esops_value": vested, "unvested_esops_value": 0}],
+        extra_breakdown={
+            "esop": {"future_value": esop_fv, "rate": f"{esop_rate * 100:.1f}%"},
+        },
     )
     state["client_data"]["investment_details"]["mutual_funds"] = []
 
@@ -98,10 +103,13 @@ def test_multi_source_last_row_capped_and_rows_sum_to_desired():
 
 def test_shortfall_shows_all_positive_sources_at_full_income():
     desired = 300_000.0
-    state = _base_state(desired_monthly_annuity=desired, surplus_monthly=0)
-    state["client_data"]["investment_details"]["esops"] = [
-        {"vested_esops_value": 100_000, "unvested_esops_value": 0},
-    ]
+    state = _base_state(
+        desired_monthly_annuity=desired,
+        surplus_monthly=0,
+        extra_breakdown={
+            "esop": {"future_value": 310_584.82, "rate": "12.0%"},
+        },
+    )
     result = calculate_retirement_annuity(state)
     annuity = result["retirement_annuity"]
     assert annuity["achievable"] is False
@@ -118,3 +126,72 @@ def test_shortfall_shows_all_positive_sources_at_full_income():
 def test_zero_desired_annuity_returns_empty():
     state = _base_state(desired_monthly_annuity=0)
     assert calculate_retirement_annuity(state) == {}
+
+
+def test_epf_ppf_and_nps_buckets_yield_income():
+    """EPF/PPF at 8.5% and NPS at 7% — previously ignored entirely."""
+    state = _base_state(
+        desired_monthly_annuity=10_000_000,  # force every source to show
+        surplus_monthly=0,
+        fd_fv=0,
+        mf_cv=0,
+        extra_breakdown={
+            "epf": {"future_value": 20_000_000, "rate": "8.4%"},
+            "ppf": {"future_value": 10_000_000, "rate": "7.5%"},
+            "nps": {"future_value": 5_000_000, "rate": "10%"},
+        },
+    )
+    state["client_data"]["investment_details"]["mutual_funds"] = []
+    annuity = calculate_retirement_annuity(state)["retirement_annuity"]
+    by_key = {s["key"]: s for s in annuity["sources"]}
+
+    # EPF + PPF merge into one row, yielded at the post-retirement rate (8.5%),
+    # NOT at the accumulation rates stored in the breakdown.
+    assert by_key["epf_ppf"]["corpus_fv"] == 30_000_000
+    assert by_key["epf_ppf"]["annual_income"] == round(30_000_000 * 0.085, 2)
+    assert by_key["nps"]["annual_income"] == round(5_000_000 * 0.07, 2)
+
+
+def test_sip_and_freed_emi_merge_into_mutual_funds_row():
+    """SIP / freed-EMI / lumpsum are MF-invested and collapse into one MF row."""
+    state = _base_state(
+        desired_monthly_annuity=10_000_000,
+        surplus_monthly=0,
+        fd_fv=0,
+        mf_cv=0,
+        extra_breakdown={
+            "sip": {"future_value": 15_784_146, "rate": "-"},
+            "freed_sip": {"future_value": 10_522_894, "rate": "-"},
+            "lumpsum": {"future_value": 1_000_000, "rate": "-"},
+        },
+    )
+    state["client_data"]["investment_details"]["mutual_funds"] = []
+    annuity = calculate_retirement_annuity(state)["retirement_annuity"]
+    by_key = {s["key"]: s for s in annuity["sources"]}
+
+    expected_corpus = 15_784_146 + 10_522_894 + 1_000_000
+    assert by_key["mutual_funds"]["corpus_fv"] == expected_corpus
+    assert by_key["mutual_funds"]["rate"] == "10.0%"
+    assert by_key["mutual_funds"]["annual_income"] == round(expected_corpus * 0.10, 2)
+    assert "sip" not in by_key and "freed_sip" not in by_key
+
+
+def test_real_estate_capital_excluded_to_avoid_double_count():
+    """Rent is already counted; the property's capital value must not yield too."""
+    state = _base_state(
+        desired_monthly_annuity=10_000_000,
+        surplus_monthly=50_000,
+        fd_fv=0,
+        mf_cv=0,
+        extra_breakdown={
+            "real_estate": {"future_value": 29_601_381, "rate": "3.0%"},
+        },
+    )
+    state["client_data"]["investment_details"]["mutual_funds"] = []
+    annuity = calculate_retirement_annuity(state)["retirement_annuity"]
+    keys = {s["key"] for s in annuity["sources"]}
+
+    assert "real_estate" not in keys
+    assert annuity["corpus_base"] == 0.0  # property capital kept out of the base
+    by_key = {s["key"]: s for s in annuity["sources"]}
+    assert by_key["rental_other_income"]["annual_income"] == 50_000 * 12

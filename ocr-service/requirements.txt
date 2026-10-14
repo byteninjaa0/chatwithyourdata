@@ -1,11 +1,13 @@
-fastapi>=0.115.0
-uvicorn[standard]>=0.32.0
-python-dotenv>=1.0.0
-pydantic>=2.0.0
-python-multipart>=0.0.9
+# Pinned to the exact versions verified working in .venv. See agent/requirements.txt
+# for why: `>=` floors let each image rebuild resolve differently and broke deployed chat.
+fastapi==0.136.1
+uvicorn[standard]==0.47.0
+python-dotenv==1.2.2
+pydantic==2.13.4
+python-multipart==0.0.29
 
 # OCR + extraction pipeline
-azure-ai-documentintelligence>=1.0.0
-azure-core>=1.30.0
-dspy-ai>=2.5.0
-litellm>=1.50.0
+azure-ai-documentintelligence==1.0.2
+azure-core==1.41.0
+dspy-ai==3.2.1
+litellm==1.86.2

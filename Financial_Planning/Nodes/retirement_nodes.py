@@ -19,6 +19,28 @@ from Financial_Planning.Utilities.utility_functions import (calculate_future_val
                                                             ppf_future_value, nps_future_value, calculate_investment_details)
 from Financial_Planning.RSU.constants import get_rsu_growth_rate
 
+# ── Post-retirement yield rates (NOMINAL) ───────────────────────────────────
+# Used by calculate_retirement_annuity to convert a retirement-year corpus into
+# perpetual annual income. These are NOMINAL rates, deliberately matched to the
+# nominal (future-value) basis of both the corpus and desired_monthly_annuity.
+# Do NOT substitute the plan's `real_return_rate` (0.04) here — that is a real
+# rate and belongs only with a today's-money target.
+POST_RETIREMENT_YIELD_RATES = {
+    "epf":        0.085,  # assumes corpus stays in EPF-like debt post-retirement
+    "ppf":        0.085,
+    "nps":        0.07,   # blended: ~40% mandatory annuity (~6%) + invested remainder
+    "sip":        0.10,   # SIP / freed-EMI / lumpsum are MF-invested
+    "freed_sip":  0.10,
+    "lumpsum":    0.10,
+    "mutual_funds": 0.10,
+}
+
+# Breakdown buckets deliberately excluded from annuity income:
+#   real_estate — its income is already counted as rental/other income (source 3);
+#                 yielding the capital value too would double-count the same asset.
+ANNUITY_EXCLUDED_BUCKETS = {"real_estate"}
+
+
 def _parse_rate_string(rate_str, default: float = 0.065) -> float:
     if isinstance(rate_str, (int, float)):
         return float(rate_str)
@@ -549,11 +571,24 @@ def wealth_at_retirement(state: ClientState):
 
 def calculate_retirement_annuity(state: ClientState):
     """
-    Income-preservation retirement annuity check: can yield from ESOP, RSU,
-    rental/other, FD, and MF fund a desired monthly annuity without spending principal?
+    Income-preservation retirement annuity check: can the yield from the
+    retirement-year corpus fund a desired monthly annuity without spending
+    principal?
 
-    Priority order: ESOP → RSU → rental/other → FD → MF.
-    ESOP/RSU use remaining pools after education allocation (60% usable cap).
+    Corpus base is `wealth_at_retirement.breakdown` — the single source of truth.
+    Every bucket there is already grown to the retirement year, so nothing is
+    re-compounded here. The one exception is existing mutual-fund holdings, which
+    have no bucket in the breakdown and are still projected from investment_details.
+
+    Priority order: ESOP → RSU → rental/other → FD → EPF/PPF → NPS → MF.
+    SIP, freed-EMI and lumpsum are merged into the MF row (all MF-invested).
+    Real-estate capital is excluded — its income is already counted as rental.
+
+    Basis: NOMINAL throughout. The corpus is a retirement-year (future-value)
+    figure and `desired_monthly_annuity` is likewise a future-value target, so
+    yields use nominal rates (see POST_RETIREMENT_YIELD_RATES). Note these rates
+    are applied in perpetuity, so life_expectancy does not enter the maths.
+
     Skips cleanly when desired_monthly_annuity is absent or <= 0.
     """
     print("--------------------------"*6)
@@ -581,55 +616,74 @@ def calculate_retirement_annuity(state: ClientState):
     war = state.get("wealth_at_retirement", {})
     retirement_year = war.get("retirement_year") or (date.today().year + years_to_ret)
 
-    oga = state.get("optimal_goal_allocation", {}) or {}
-    goals = oga.get("goals", []) or []
-    rsu_portfolio = oga.get("rsu_portfolio", []) or []
+    # ── Corpus base: wealth_at_retirement.breakdown ─────────────────────────
+    # Single source of truth. Every bucket is already grown to the retirement
+    # year there, so nothing is re-derived or re-compounded here.
+    breakdown = (war.get("breakdown") or {})
 
-    # ── 1. ESOP yield (remaining after education, 60% usable cap) ───────────
-    esop_rate = 0.12
-    esop_usable_cap = 0.60
-    vested_total = sum(
-        float(e.get("vested_esops_value", 0) or 0) for e in (invest.get("esops") or [])
-    )
-    esop_usable = vested_total * esop_usable_cap
-    esop_consumed = 0.0
-    for goal in goals:
-        for fund in goal.get("funded_from") or []:
-            if fund.get("type") == "esop_funds":
-                esop_consumed += float(fund.get("pv_allocated_today", 0) or 0)
-    esop_remaining = max(0.0, esop_usable - esop_consumed)
-    esop_fv = calculate_future_value(esop_remaining, esop_rate, years_to_ret) if esop_remaining > 0 else 0.0
+    def _bucket_fv(key: str) -> float:
+        return float((breakdown.get(key) or {}).get("future_value", 0) or 0)
+
+    def _bucket_rate(key: str, default: float) -> float:
+        """Post-retirement yield rate: explicit override first, else the
+        bucket's own stored rate, else `default`. Buckets carrying "-" (sip /
+        freed_sip / lumpsum) have no stored rate and fall through to the
+        override."""
+        if key in POST_RETIREMENT_YIELD_RATES:
+            return POST_RETIREMENT_YIELD_RATES[key]
+        return _parse_rate_string((breakdown.get(key) or {}).get("rate"), default)
+
+    # ── 1. ESOP yield (leftover pool after goal allocation) ─────────────────
+    esop_fv = _bucket_fv("esop")
+    esop_rate = _bucket_rate("esop", 0.12)
     esop_income = esop_fv * esop_rate
 
-    # ── 2. RSU yield (tracker remaining — income-only, does not mutate rsu_remaining)
-    # Time basis is approximate (mixes vest-year projections); acceptable for v1.
-    rsu_rate = get_rsu_growth_rate(invest)
-    rsu_remaining = sum(float(p.get("rsu_remaining", 0) or 0) for p in rsu_portfolio)
-    rsu_fv = calculate_future_value(rsu_remaining, rsu_rate, years_to_ret) if rsu_remaining > 0 else 0.0
+    # ── 2. RSU yield (leftover tracker pool after goal allocation) ──────────
+    rsu_fv = _bucket_fv("rsu")
+    rsu_rate = _bucket_rate("rsu", get_rsu_growth_rate(invest))
     rsu_income = rsu_fv * rsu_rate
 
     # ── 3. Rental / other income (face value, not grown) ────────────────────
+    # Real estate CAPITAL is excluded from the corpus base on purpose — the same
+    # property must not both pay rent and yield on its market value.
     rental_annual = surplus_income_monthly * 12
 
     # ── 4. FD interest ──────────────────────────────────────────────────────
-    fd_breakdown = (war.get("breakdown") or {}).get("fixed_deposits", {})
-    fd_fv = float(fd_breakdown.get("future_value", 0) or 0)
-    fd_rate_str = fd_breakdown.get("rate", "6.5%")
+    fd_fv = _bucket_fv("fixed_deposits")
+    fd_rate_str = (breakdown.get("fixed_deposits") or {}).get("rate", "6.5%")
     fd_rate = _parse_rate_string(fd_rate_str, 0.065)
     fd_income = fd_fv * fd_rate
 
-    # ── 5. Mutual funds (single bucket) ───────────────────────────────────────
-    mf_fv = 0.0
-    mf_income = 0.0
-    mf_rate = 0.12
-    for mf in invest.get("mutual_funds") or []:
-        cv = float(mf.get("current_value", 0) or 0)
-        r = float(mf.get("expected_annual_return", 0.12) or 0.12)
-        if mf_fv == 0.0:
-            mf_rate = r
-        fv = calculate_future_value(cv, r, years_to_ret)
-        mf_fv += fv
-        mf_income += fv * r
+    # ── 5. Retirement schemes (EPF / PPF / NPS) ─────────────────────────────
+    epf_ppf_fv = _bucket_fv("epf") + _bucket_fv("ppf")
+    epf_ppf_rate = POST_RETIREMENT_YIELD_RATES["epf"]
+    epf_ppf_income = epf_ppf_fv * epf_ppf_rate
+
+    nps_fv = _bucket_fv("nps")
+    nps_rate = POST_RETIREMENT_YIELD_RATES["nps"]
+    nps_income = nps_fv * nps_rate
+
+    # ── 6. Mutual funds — existing holdings + SIP + freed-EMI + lumpsum ─────
+    # Merged into one row: all four are MF-invested and share a single rate.
+    # Existing MF holdings have no bucket in wealth_at_retirement, so they are
+    # still compounded from investment_details here.
+    existing_mf_fv = sum(
+        calculate_future_value(
+            float(mf.get("current_value", 0) or 0),
+            float(mf.get("expected_annual_return", 0.10) or 0.10),
+            years_to_ret,
+        )
+        for mf in (invest.get("mutual_funds") or [])
+        if float(mf.get("current_value", 0) or 0) > 0
+    )
+    mf_fv = (
+        existing_mf_fv
+        + _bucket_fv("sip")
+        + _bucket_fv("freed_sip")
+        + _bucket_fv("lumpsum")
+    )
+    mf_rate = POST_RETIREMENT_YIELD_RATES["mutual_funds"]
+    mf_income = mf_fv * mf_rate
     mf_rate_str = f"{mf_rate * 100:.1f}%"
 
     def _source_row(
@@ -653,10 +707,12 @@ def calculate_retirement_annuity(state: ClientState):
         }
 
     ordered_candidates = [
-        ("esop", "ESOP yield", "12.0%", esop_income, esop_fv if esop_fv else None, esop_remaining if esop_remaining else None),
-        ("rsu", "RSU yield", f"{rsu_rate * 100:.1f}%", rsu_income, rsu_fv if rsu_fv else None, rsu_remaining if rsu_remaining else None),
+        ("esop", "ESOP yield", f"{esop_rate * 100:.1f}%", esop_income, esop_fv if esop_fv else None, None),
+        ("rsu", "RSU yield", f"{rsu_rate * 100:.1f}%", rsu_income, rsu_fv if rsu_fv else None, None),
         ("rental_other_income", "Rental / other income", "-", rental_annual, None, None),
         ("fixed_deposits", "FD interest", fd_rate_str, fd_income, fd_fv if fd_fv else None, None),
+        ("epf_ppf", "EPF / PPF yield", f"{epf_ppf_rate * 100:.1f}%", epf_ppf_income, epf_ppf_fv if epf_ppf_fv else None, None),
+        ("nps", "NPS yield", f"{nps_rate * 100:.1f}%", nps_income, nps_fv if nps_fv else None, None),
         ("mutual_funds", "Mutual fund yield", mf_rate_str, mf_income, mf_fv if mf_fv else None, None),
     ]
 
@@ -704,6 +760,10 @@ def calculate_retirement_annuity(state: ClientState):
         "shortfall_monthly": round(shortfall_monthly, 2),
         "surplus_income_monthly": round(surplus_income_monthly, 2),
         "total_available_monthly": round(used_monthly, 2),
+        "corpus_base": round(
+            esop_fv + rsu_fv + fd_fv + epf_ppf_fv + nps_fv + mf_fv, 2
+        ),
+        "excluded_buckets": sorted(ANNUITY_EXCLUDED_BUCKETS),
         "sources": sources,
     }
 

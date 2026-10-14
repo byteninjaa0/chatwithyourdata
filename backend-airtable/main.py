@@ -28,7 +28,7 @@ from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.requests import Request
-from fastapi.responses import JSONResponse, Response
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
 from rsu_market import (  # noqa: E402
@@ -40,7 +40,6 @@ from rsu_market import (  # noqa: E402
 logger = logging.getLogger(__name__)
 from financial_plan_runner import (  # noqa: E402
     FinancialPlanDependencyError,
-    generate_ppt_from_workflow_state,
     run_financial_plan_for_client,
 )
 from client_patch_fields import (  # noqa: E402
@@ -92,6 +91,21 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# POST /financial-plan/ppt-v2 -- the 49-slide deck, built from workflow_state
+# by Financial_Planning/PPTX_Migration/deck.py.
+# This is the only deck endpoint (the old python-pptx /financial-plan/ppt was
+# removed; it is preserved at git tag `legacy-ppt-pipeline`). Guarded so a
+# problem in the deck package logs a warning instead of stopping the API.
+try:
+    _REPO_ROOT = _BACKEND_DIR.parent
+    if str(_REPO_ROOT) not in sys.path:
+        sys.path.insert(0, str(_REPO_ROOT))
+    from Financial_Planning.PPTX_Migration.endpoint import router as ppt_v2
+
+    app.include_router(ppt_v2)
+except Exception as _exc:  # pragma: no cover - optional during migration
+    logger.warning("PPTX v2 deck endpoint unavailable: %s", _exc)
+
 
 class RsuRefreshBody(BaseModel):
     tickers: list[str] = []
@@ -107,10 +121,6 @@ class FinancialPlanRequest(BaseModel):
     record_id: str
     education_targets: list[EducationTarget] | None = None
     overrides: "PlanOverrides | None" = None
-
-
-class FinancialPlanPptRequest(BaseModel):
-    workflow_state: dict
 
 
 class ClientPatchRequest(BaseModel):
@@ -853,34 +863,6 @@ def run_financial_plan(req: FinancialPlanRequest):
         raise HTTPException(
             status_code=500, detail=f"Financial plan failed: {exc}"
         ) from exc
-
-
-@app.post("/financial-plan/ppt")
-def generate_financial_plan_ppt_endpoint(req: FinancialPlanPptRequest):
-    """
-    Build a PowerPoint deck from a prior Make plan workflow_state (no workflow re-run).
-    """
-    import traceback
-
-    if not req.workflow_state:
-        raise HTTPException(status_code=400, detail="workflow_state is required")
-    try:
-        ppt_bytes, filename = generate_ppt_from_workflow_state(req.workflow_state)
-    except FinancialPlanDependencyError as exc:
-        raise HTTPException(status_code=503, detail=str(exc)) from exc
-    except ValueError as exc:
-        raise HTTPException(status_code=400, detail=str(exc)) from exc
-    except Exception as exc:
-        traceback.print_exc()
-        raise HTTPException(
-            status_code=500, detail=f"PPT generation failed: {exc}"
-        ) from exc
-
-    return Response(
-        content=ppt_bytes,
-        media_type="application/vnd.openxmlformats-officedocument.presentationml.presentation",
-        headers={"Content-Disposition": f'attachment; filename="{filename}"'},
-    )
 
 
 if __name__ == "__main__":

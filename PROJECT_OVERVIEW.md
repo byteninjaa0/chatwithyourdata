@@ -58,7 +58,7 @@ Python version is **not pinned** in-repo; LangChain 1.x typically needs 3.10+.
 ### Providers
 
 - **Azure OpenAI** — chat agent: `AZURE_OPENAI_*` (aliases `AZURE_API_*` in `agent/main.py`); planning LLM nodes: `AZURE_API_*` in `Financial_Planning/Nodes/agentic_nodes.py`; direct Next chat: `AZURE_API_*` in `app/api/copilotkit/route.ts`
-- **Tavily** — `searchInternet` in chat; `tavily_tool` in `Financial_Planning/Toools/standard_tools.py` (used by fee scrapper script, not the main workflow graph)
+- **Tavily** — `searchInternet` in chat (the planning workflow does not call it)
 - **Airtable** — client records via `backend/airtable_main.py`
 
 ---
@@ -248,8 +248,8 @@ START
 | `calculate_asset_percentages_and_ratios` | `basic_calculations_nodes.py` | Yes | Liquidity ratio, flexibility, spending behavior heuristics |
 | `goal_prioritization` | `agentic_nodes.py` | LLM | Tools `calculate_priority_score`, `sort_goals_by_priority` → `PrioritizedGoals`; post-process `sip_required` @ 9% |
 | `freed_emi_by_year` | `basic_calculations_nodes.py` | Yes | Natural loan amortization timeline |
-| `plan_goals` | `allocations_nodes.py` | Yes | Greedy allocation: lumpsum, freed SIP, surplus SIP to sorted goals; can set `EMI_allocation` for prepay path |
-| `plan_prepayments` | `allocations_nodes.py` | Yes | Loan prepayment optimizer (uses `loan_prepayment_consolidated` logic) |
+| `plan_goals` | `allocations_nodes.py` | Yes | Greedy allocation: lumpsum, freed SIP, surplus SIP to sorted goals; can set `EMI_allocation` for prepay path. Each `goal_funding` snapshot (and so `optimal_goal_allocation`) also carries display-only `ssy_projection` from `project_ssy_accounts()`: every SSY account valued at maturity via `calculate_ssy_future_value`, its planned withdrawals, and the balance left at maturity. Nothing in the workflow reads it; the deck's SSY slide does. |
+| `plan_prepayments` | `allocations_nodes.py` | Yes | Loan prepayment optimizer |
 | `choose_optimal_strategy` | `allocations_nodes.py` | Yes | Picks best among allocation scenarios (surplus + interest saved) |
 | `invest_monthly_surplus` | `basic_calculations_nodes.py` | Yes | Leftover surplus → 30% debt / 40% hybrid / 30% equity |
 | `wealth_at_retirement` | `retirement_nodes.py` | Yes | Aggregates projected corpus at retirement (EPF/PPF/NPS, FD, real estate, leftover ESOP/RSU, SIP/lumpsum for retirement goal) |
@@ -260,9 +260,8 @@ START
 
 ### 5.6 PPT generator (dashboard + standalone CLI)
 
-- **Dashboard path:** After **Make plan**, `POST /financial-plan/run` returns `summary` plus JSON-serializable `workflow_state`. The plan review UI stores `workflow_state` on each `PlanTab` (browser memory only). **Download PPT** calls `POST /financial-plan/ppt` with that state; [`Financial_Planning/Utilities/ppt_runner.py`](Financial_Planning/Utilities/ppt_runner.py) fills [`Financial Plan Stencil v2.pptx`](Financial_Planning/PPT_io/PPT_template/) via `PPTBuilder` (extra Azure LLM calls for retirement commentary). Proxied by Next.js at `/api/financial-plan/ppt`.
-- **Standalone CLI:** [`Financial_Planning/Main/main.py`](Financial_Planning/Main/main.py) runs the workflow against a persona fixture (requires `input_data_personas.py`) and writes `.pptx` to `PPT_io/PPT_output/`.
-- **Templates:** `Financial_Planning/PPT_io/PPT_template/*.pptx` must be present on the server host (not tracked in git).
+- **Dashboard path:** After **Make plan**, `POST /financial-plan/run` returns `summary` plus JSON-serializable `workflow_state`. The plan review UI stores `workflow_state` on each `PlanTab` (browser memory only). **Download PPT** calls `POST /financial-plan/ppt-v2` with that state (proxied by Next.js at `/api/financial-plan/ppt`): [`Financial_Planning/PPTX_Migration/adapter.py`](Financial_Planning/PPTX_Migration/adapter.py) maps it to deck values and [`deck.py`](Financial_Planning/PPTX_Migration/deck.py) renders the 49-slide Goal Based Planning deck from [`FP-PPT-AI-NEW/`](FP-PPT-AI-NEW/README.md) (no LLM calls; sections appear only when the client has the data). The previous python-pptx deck (`ppt_builder.py` / `ppt_runner.py` / `ppt_utilities.py`, `PPT_io/` stencils, `POST /financial-plan/ppt`) was removed on 2026-10-14; it is preserved at git tag `legacy-ppt-pipeline`.
+- **Template:** `FP-PPT-AI-NEW/placeholder_template_package/financial_plan_template.pptx`, generated from the designed deck by `build_pptx_template.py --verify`. PDF export needs PowerPoint on the host.
 
 ---
 
@@ -297,7 +296,7 @@ Airtable record
     → summarize_plan_state(full_state)  (~20 goal rows max in previews)
     → response: { summary, workflow_state }  (workflow_state held on PlanTab for PPT only)
     → FinancialPlanPanel UI + useCopilotReadable
-    → (optional) POST /financial-plan/ppt { workflow_state } → .pptx download (no workflow re-run)
+    → (optional) POST /financial-plan/ppt-v2 { workflow_state } → .pptx download (no workflow re-run)
 ```
 
 | Concern | Current behavior |
@@ -357,7 +356,6 @@ Airtable record
 | `lib/fastapi-proxy.ts` | Shared FastAPI `fetch` helper |
 | `lib/spouseAirtableFields.ts` | Spouse UI path ↔ Airtable column mapping for PATCH |
 | `lib/educationAirtableFields.ts` | Child slot + UG/PG ↔ `child_N_*_destination` mapping for PATCH |
-| `lib/user-info.ts` | **Dead** — not imported |
 | `data/dashboard-data.ts` | Demo data for unused `Dashboard.tsx` |
 | `next.config.ts` | `allowedDevOrigins`, standalone trace root |
 
@@ -386,7 +384,6 @@ Airtable record
 | `Workflow/__init__.py` | Package marker |
 | `Models/client_data_state.py` | `ClientState`, `AgentState` |
 | `Models/llm_schemas.py` | Pydantic schemas for structured LLM outputs |
-| `Models/test.py` | Test/scratch (not wired to app) |
 | `Nodes/basic_calculations_nodes.py` | Age, ULIP, baskets, ratios, surplus invest, EMI freed, routers |
 | `Nodes/retirement_nodes.py` | Corpus, scheme FV, retirement goal |
 | `Nodes/child_education_nodes.py` | Education fees + funding |
@@ -395,18 +392,13 @@ Airtable record
 | `Nodes/agentic_nodes.py` | LLM risk + prioritization |
 | `Agent/agent.py` | Inner ReAct agent for LLM nodes |
 | `Toools/custom_tools.py` | LangChain tools for prioritization / risk |
-| `Toools/standard_tools.py` | Tavily tool (scrapper script) |
 | `Utilities/utility_functions.py` | FV, SIP, loan math, allocation helpers |
 | `Utilities/prompts.py` | LLM system prompts |
-| `Utilities/ppt_utilities.py`, `ppt_builder.py` | PPT generation helpers |
 | `RSU/webscrapper.py` | RSU parquet load + refresh |
-| `College_Fees_Scrapper/education_fees_scrapper.py` | Standalone fee scraper (not in workflow graph) |
+| `College_Fees_Scrapper/default_*_fees.pkl` | Fee tables read by the education nodes (the web scraper that built them was removed 2026-10-14; edit the tables or `education_fee_defaults.py` by hand) |
 | `College_Fees_Scrapper/*.pkl` | Cached fee tables used by workflow |
 | `education_fee_defaults.py` | Python defaults if pickle missing |
-| `loan_prepayment_consolidated.py` | Prepayment planning core |
 | `input_data.py`, `input_data_personas.py` | Sample / persona payloads |
-| `Main/main.py` | Standalone PPT pipeline (not dashboard) |
-| `PPT_io/PPT_template/*.pptx` | PowerPoint templates |
 
 **Not present:** `agent/planner/` (no `graph.py`, `tools.py`, or planner store in this repo).
 
@@ -444,7 +436,7 @@ Repo-root `.env` is loaded by `agent/main.py`, `backend/airtable_main.py`, and p
 | `GET` | `/api/airtable/clients/[id]` | — | `{ record_id, client_data: {...} }` | `GET :8001/clients/{id}` |
 | `PATCH` | `/api/airtable/clients/[id]` | `{ fields: { spouse_*?, child_{1..3}_graduation_destination?, child_{1..3}_post_graduation_destination? } }` (whitelist) | `{ record_id, client_data }` | `PATCH :8001/clients/{id}` |
 | `POST` | `/api/financial-plan/run` | `{ record_id, education_targets?, overrides?: { epf_rate?, ppf_rate?, nps_rate?, mf_expected_return?, rsu_growth_rate?, desired_monthly_annuity?, retirement_age? } }` | `{ ok, summary, workflow_state }` or `{ detail }` | `POST :8001/financial-plan/run` |
-| `POST` | `/api/financial-plan/ppt` | `{ workflow_state }` (from prior Make plan) | `.pptx` binary or `{ detail }` | `POST :8001/financial-plan/ppt` |
+| `POST` | `/api/financial-plan/ppt` | `{ workflow_state }` (from prior Make plan) | `.pptx` binary or `{ detail }` | `POST :8001/financial-plan/ppt-v2` |
 | `GET` | `/api/rsu-market-data` | — | RSU payload JSON | `GET :8001/rsu-market-data` |
 | `POST` | `/api/rsu-refresh` | optional tickers | refresh result | `POST :8001/rsu-refresh` |
 | `GET` | `/api/rsu/market-data` | `?ticker=` | legacy | `GET :8001/rsu/market-data` |
@@ -466,7 +458,7 @@ Repo-root `.env` is loaded by `agent/main.py`, `backend/airtable_main.py`, and p
 | `GET` | `/clients/{record_id}` | — | `{ record_id, client_data }` |
 | `PATCH` | `/clients/{record_id}` | `{ fields: { ... } }` spouse + education destination whitelist | `{ record_id, client_data }` (re-fetched after Airtable PATCH) |
 | `POST` | `/financial-plan/run` | `{ record_id, education_targets?, overrides?: PlanOverrides }` (rates → investments; `rsu_growth_rate` → `investment_details.rsu_growth_rate`; `retirement_age` / `desired_monthly_annuity` → `client_data`) | `{ ok: true, summary: {...}, workflow_state: {...} }` or HTTP error |
-| `POST` | `/financial-plan/ppt` | `{ workflow_state }` | `.pptx` attachment or HTTP error |
+| `POST` | `/financial-plan/ppt-v2` | `{ workflow_state, format?: "pptx" \| "pdf", advisor?: { name?, designation?, email? } }` | `.pptx` (or `.pdf`; needs PowerPoint on the server) attachment or HTTP error |
 | `GET` | `/rsu-market-data` | — | parquet-derived JSON |
 | `POST` | `/rsu-refresh` | `{ tickers?: string[] }` | refresh metadata |
 | `GET` | `/rsu/market-data` | query `ticker` | legacy |
@@ -601,10 +593,9 @@ Set repo-root `.env` from `.env.example` (`AIRTABLE_*`, `AZURE_OPENAI_*` for cha
 - **`monthly_surplus` in `calculate_age`** omits EMI deductions (differs from dashboard display in `ClientsDashboard` which may show different surplus).
 - **Hardcoded defaults** — retirement life expectancy 85, inflation 6%, real return 4%, EPF 8.5% in mapper; education fee lookup fallbacks ₹10L/₹12L remain as backend safety net, but the UI requires the user to enter target corpus inline before Make plan.
 - **`AIRTABLE_BASE_ID` default** in `airtable_main.py` if env unset (`appE5VYaHMHmorADN`).
-- **`Financial_Planning/Main/main.py`** — standalone PPT path; extra LLM calls not used by dashboard.
 - **`clarify_with_user` tool** uses blocking `input()` — unusable in server context if ever called.
 - **Heavy `print` debugging** in workflow nodes — no structured logging.
-- **Unused files** — `Dashboard.tsx`, `lib/user-info.ts`, unused npm deps.
+- **Unused files** — unused npm deps.
 - **`SearchResults`** — status only, no Tavily snippets.
 - **README `?openCopilot=true`** — no handler in code.
 

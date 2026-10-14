@@ -1,6 +1,6 @@
 """Fallback fee tables when pickle files are not present."""
 
-# Stream keys match `education_fees_scrapper.py` / `child_education_nodes.py` lookups.
+# Stream keys match the `child_education_nodes.py` lookups.
 DEFAULT_GRADUATION_FEES = [
     {
         "graduation_destination": "International",

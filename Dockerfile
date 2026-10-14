@@ -82,6 +82,10 @@ COPY backend ./backend
 COPY backend-airtable ./backend-airtable
 COPY ocr-service ./ocr-service
 COPY Financial_Planning ./Financial_Planning
+# The Goal Based Planning deck renderer and its template. POST
+# /financial-plan/ppt-v2 (Download PPT) runs FP-PPT-AI-NEW/.../populate_pptx.py;
+# without this folder the endpoint returns "deck renderer not found".
+COPY FP-PPT-AI-NEW ./FP-PPT-AI-NEW
 
 # --- Built Next.js frontend + the files `next start` needs at runtime ---
 COPY --from=web-build /app/.next ./.next
